@@ -1476,7 +1476,7 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>340028680.06239301</real>
+		<real>340028740.33574498</real>
 		<string>{45, 521}</string>
 		<string>{284, 0}</string>
 		<dict>
@@ -20577,7 +20577,7 @@
 		<string>IDEActiveWorkspaceTabController</string>
 		<string>IDEWindowToolbarIsVisible</string>
 		<string>IDEWindowTabBarIsVisible</string>
-		<string>{{20, 56}, {1400, 822}}</string>
+		<string>{{31, 56}, {1400, 822}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -21115,7 +21115,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>340028680.06665701</real>
+		<real>340028740.33937401</real>
 		<string>{45, 521}</string>
 		<string>{284, 0}</string>
 		<string>testApp::setup()</string>
