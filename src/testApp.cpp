@@ -130,6 +130,8 @@ void testApp::draw(){
 
         ofSetColor(baseBlue);   
         ofRect(0, 0, 250, 330);
+        ofSetColor(255, 255, 255);
+        ofDrawBitmapString("Select your PIN", 10,20);    
     
     int y = 10;
     int offset = 20;
@@ -137,6 +139,8 @@ void testApp::draw(){
     for (int i = 1; i < 11; i++) {
         ofRectMode(OF_RECTMODE_CENTER);
         ofSetColor(255, 0, 0);
+
+        
         ofRect(10,y+offset, 15, 15);
         ofRect(225,y+offset, 15, 15);        
         
@@ -152,8 +156,39 @@ void testApp::draw(){
         offset += 30;
     }
     ofPopMatrix();    
-    
 
+    
+    // loads the items for the secondary items
+    ofPushMatrix();    
+    
+        ofTranslate(350, 50);
+        ofSetColor(baseBlue);   
+        ofRect(0, 0, 400, 200); // draw bounding box
+        ofSetColor(255, 255, 255);
+        ofDrawBitmapString("Secondary options", 20, 20);
+
+    // TODO:  load values from XML
+        ofDrawBitmapString("'0' - Disbaled", 40, 65);        
+        ofDrawBitmapString("'1' - DIOUT", 40, 85);        
+        ofDrawBitmapString("'2' - DIN", 40, 105);        
+        ofSetColor(255, 0, 0); // draw option boxes
+        ofRect(20, 55, 15, 15);
+        ofRect(20, 75, 15, 15);    
+        ofRect(20, 95, 15, 15);        
+
+    ofPopMatrix();
+    
+    // loads display box to check 
+    
+    ofPushMatrix();
+    ofTranslate(350, 275);
+        ofSetColor(baseBlue);
+        ofRect(0, 0, 400, 100);
+        ofSetColor(255, 255, 255);
+    ofDrawBitmapString("CONSOLE LOG/ SERIAL INFO", 20, 20);
+    ofPopMatrix();
+    
+    
     // draw the pseudo selection box
     ofPushMatrix();
     // move to box center pin 20 (top right)
@@ -164,7 +199,6 @@ void testApp::draw(){
         ofRect(0, 0, 18,18);
     
     // check global vairables to determine what message to show
-    
     ofPopMatrix();
     
     // if space pressed, toggle secondary controls
