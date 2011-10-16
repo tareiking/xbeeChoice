@@ -3,7 +3,9 @@
 vector<string> guiStr;
 bool bInCommandMode;
 string msg;
-
+int selectionOffsetX;
+int selectionOffsetY;
+bool bSecondOptions;
 
 void testApp::setup(){
 
@@ -21,17 +23,12 @@ void testApp::setup(){
     ofEnableSmoothing();
     ofEnableAlphaBlending();
     
+    selectionOffsetX = 273;
+    selectionOffsetY = 80;
+
 
     // setup gui items
     guiPoints.push_back(ofPoint(ofGetWidth()/2, 20));
-//    guiPoints.push_back(ofPoint(50, 20));
-//    guiPoints.push_back(ofPoint(50, 50));
-//    guiPoints.push_back(ofPoint(50, 80));    
-//    guiPoints.push_back(ofPoint(50, 120));
-//    guiPoints.push_back(ofPoint(50, 160));
-//    guiPoints.push_back(ofPoint(50, 200));
-    
-//    guiStr.push_back("+++");
     
 // baud rates    
     guiStr.push_back("ATBD0");
@@ -51,10 +48,11 @@ void testApp::setup(){
     
     guiStr.push_back("ATD04");    
     guiStr.push_back("ATD05");    
+
 // D1 hard codes    
-    guiStr.push_back("ATD10");    
-    guiStr.push_back("ATD11");    
-    guiStr.push_back("ATD12");    
+    guiStr.push_back("ATD05");    
+    guiStr.push_back("ATD15");    
+    guiStr.push_back("ATD25");    
     guiStr.push_back("ATD13");    
     guiStr.push_back("ATD14");    
     guiStr.push_back("ATD15");    
@@ -62,7 +60,7 @@ void testApp::setup(){
 // Command codes
     guiStr.push_back("ATHV");
     guiStr.push_back("ATWR");
-    guiStr.push_back("ATDL");
+    guiStr.push_back("ATCN");
     guiStr.push_back("ATWR");
     guiStr.push_back("ATHV");
     guiStr.push_back("ATHV");
@@ -85,7 +83,7 @@ void testApp::setup(){
         if (y >= 350)
             y = 20;
         }
-    
+    bg.loadImage("honey.png");
         
 }
 
@@ -94,47 +92,96 @@ char myByte = 0;
 
 
 void testApp::update(){
+    
+//    if(serialPortSelected)
 
     updateOutgoing(); // needs to move into OOP class and take serial*
     updateIncoming(); // needs to move into OOP class and take serial*
     
 } 
 
+ofColor baseBlue = ofColor(81, 116, 146);
+
 //--------------------------------------------------------------
 void testApp::draw(){
-
-//    ofRect(10, 10, 100, 30);
-    if(bInCommandMode) 
-        ofSetColor(125, 125, 125, 25);
-    else
-        ofSetColor(255, 255, 255);
     
-    ofRect(0, 0, ofGetWidth(), ofGetHeight());
+//    ofRect(10, 10, 100, 30);
+//    if(bInCommandMode) 
+//        ofSetColor(125, 125, 125, 25);
+//    else
+//        ofSetColor(255, 255, 255);
+//    
+//    ofRect(0, 0, ofGetWidth(), ofGetHeight());
+//
+//    bg.draw(ofGetWidth()/2-bg.width/2,ofGetHeight()/2-bg.height/2);
+//    ofSetColor(255, 0, 0);
+//    ofDrawBitmapString("Press 'space' to enter command mode", 10, 10);
+//    
+    ofPushMatrix();
+        ofTranslate(ofGetWidth()/2+bg.width/2+30, ofGetHeight()/2-bg.height/4);    
+        ofDrawBitmapString("Pin 20 / parameters: 0-5",0,0);        
+    ofPopMatrix();    
+    
+    
+    
+    // draw the pseudo xbee
+    ofPushMatrix();
+    ofTranslate(50, 50);
+
+        ofSetColor(baseBlue);   
+        ofRect(0, 0, 250, 330);
+    
+    int y = 10;
+    int offset = 20;
+    int yBottom = 330;
+    for (int i = 1; i < 11; i++) {
+        ofRectMode(OF_RECTMODE_CENTER);
+        ofSetColor(255, 0, 0);
+        ofRect(10,y+offset, 15, 15);
+        ofRect(225,y+offset, 15, 15);        
+        
+        ofSetColor(255, 255, 255);
+        // should get information from xml
+        string tempStrLeft = "PIN " + ofToString(i);
+        ofDrawBitmapString(tempStrLeft, ofPoint(35, y+offset+12));
+
+        string tempStrRight = "PIN " + ofToString(i+10);
+        ofDrawBitmapString(tempStrRight, ofPoint(170,yBottom-offset+2)); // start from bottom up
+        
+        
+        offset += 30;
+    }
+    ofPopMatrix();    
+    
+
+    // draw the pseudo selection box
+    ofPushMatrix();
+    // move to box center pin 20 (top right)
+    // coords are 300(rect start) + 225 (x), 50 + 20 + offset (10) (y) - offset
+        ofTranslate(selectionOffsetX, selectionOffsetY);
+        ofRectMode(OF_RECTMODE_CENTER);
+        ofSetColor(255, 255, 255);
+        ofRect(0, 0, 18,18);
+    
+    // check global vairables to determine what message to show
+    
+    ofPopMatrix();
+    
+    // if space pressed, toggle secondary controls
+    if (bSecondOptions){
+        // move selection to secondary options
+        
+        // display only relevant options
+        // ie 0-2
+        
+    }
+    
     
     for (int i = 0; i < incomingStr.size(); i++) {
         printf("%c", incomingStr[i]);
         msg += incomingStr[i];
     }
-    
-    for (int i = 0; i < guiPoints.size(); i++) {
-        ofRectMode(OF_RECTMODE_CENTER);
-        int _x = guiPoints[i].x;
-        int _y = guiPoints[i].y;
-        int radii = 10;
-        // check in rect
-        if(ofDist(mouseX, mouseY, _x, _y)<radii)
-        ofSetColor(255, 255, 255);
-        else
-            ofSetColor(255, 0, 0);
-        
-        ofCircle(_x, _y, radii);
-        ofSetColor(0,0,0);
-        ofDrawBitmapString(guiStr[i], _x+15, _y);
-    }
-
-    
-
-    
+      
     ofDrawBitmapString(msg, ofGetWidth()/2, ofGetHeight()-200);
     
     incomingStr.clear();
@@ -159,37 +206,50 @@ void testApp::keyReleased(int key){
     }
     
     if(key == OF_KEY_UP){
-        serial.flush();
-        cout << "up pressed, sent:  ";
-        unsigned char buffer[6];
-        buffer[0]='A';
-        buffer[1]='T';
-        buffer[2]='D';        
-        buffer[3]='0';        
-        buffer[4]='5';                
-        buffer[5]='\r';
-        serial.writeBytes(buffer,6);
+        selectionOffsetY -= 30;        
+        if(selectionOffsetY < 80)
+            selectionOffsetY = 80;
+        
+//        serial.flush();
+//        cout << "up pressed, sent:  ";
+//        unsigned char buffer[6];
+//        buffer[0]='A';
+//        buffer[1]='T';
+//        buffer[2]='D';        
+//        buffer[3]='0';        
+//        buffer[4]='5';                
+//        buffer[5]='\r';
+//        serial.writeBytes(buffer,6);
     }
     
-    if(key == OF_KEY_DOWN){
-        serial.flush();
-        cout << "down pressed, sent:  ";
-//        outgoingStr = stringToCharVector("ATVR", true);
-//        outgoingStr = stringToCharVector("ATID", true);
-        outgoingStr.clear();
-        outgoingStr = stringToCharVector("ATD15", true);
+    if(key == OF_KEY_DOWN){        
+        selectionOffsetY += 30;
+        if(selectionOffsetY > 350)
+            selectionOffsetY = 350;
+        cout << selectionOffsetY;
+//        serial.flush();
+//        cout << "down pressed, sent:  ";
+//        outgoingStr.clear();
+//        outgoingStr = stringToCharVector("ATD15", true);
         
     }
     
     if(key == OF_KEY_LEFT){
-        serial.flush();
-        cout << "down pressed, sent:  ";
-//        outgoingStr = stringToCharVector("ATVR", true);
-//        outgoingStr = stringToCharVector("ATID", true);
-        outgoingStr.clear();
-        outgoingStr = stringToCharVector("ATD05", true);        
+        selectionOffsetX = 57;
+        cout << selectionOffsetX;
+//        serial.flush();
+//        cout << "left pressed, sent:  ";
+//        outgoingStr.clear();
+//        outgoingStr = stringToCharVector("ATD05", true);        
     }
     
+    if(key == OF_KEY_RIGHT){
+        selectionOffsetX = 273;
+        //        serial.flush();
+        //        cout << "left pressed, sent:  ";
+        //        outgoingStr.clear();
+        //        outgoingStr = stringToCharVector("ATD05", true);        
+    }    
 }
 
 #pragma mark
@@ -217,7 +277,6 @@ vector<char> testApp::stringToCharVector(string _incoming, bool _addCarriageRetu
     return result;          
     
 }
-
 
 void testApp::updateOutgoing(){
     // check if something is set to go out
@@ -270,26 +329,38 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    for (int i = 0; i < guiPoints.size(); i++) {
-        int _x = guiPoints[i].x;
-        int _y = guiPoints[i].y;
-        int radii = 10;
-        // check in rect
-        if(ofDist(mouseX, mouseY, _x, _y)<radii){
-            cout << guiStr[i] << " : ";
-            outgoingStr = stringToCharVector(guiStr[i], true);
-            ofSetColor(255,255,255);
-            ofCircle(_x, _y, radii);
-            ofDrawBitmapString(guiStr[i], _x+15, _y);
-            
-        }
-        
-        if( i == 0 ){
-            outgoingStr = stringToCharVector(guiStr[i], false);
-            bInCommandMode = true;
-        }
-        
-    }
+//    for (int i = 0; i < guiPoints.size(); i++) {
+//        int _x = guiPoints[i].x;
+//        int _y = guiPoints[i].y;
+//        int radii = 10;
+//        // check in rect
+//        if(ofDist(mouseX, mouseY, _x, _y)<radii){
+//            cout << guiStr[i] << " : ";
+//            outgoingStr = stringToCharVector(guiStr[i], true);
+//            ofSetColor(255,255,255);
+//            ofCircle(_x, _y, radii);
+//            ofDrawBitmapString(guiStr[i], _x+15, _y);
+//            
+//        }
+//        
+//        if( i == 0 ){
+//            outgoingStr = stringToCharVector(guiStr[i], false);
+//            bInCommandMode = true;
+//        }
+//        
+//    }
+    
+    // draw rect that is too the right and high enough
+    ofRect(0, 0, 100, 50);
+    ofPushMatrix();
+    ofTranslate(x, y);
+    ofSetColor(0, 0, 255);
+
+    cout << "pressed";
+    ofPopMatrix();
+    
+    
+    
 }
 
 //--------------------------------------------------------------

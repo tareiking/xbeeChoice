@@ -31,5 +31,6 @@ class testApp : public ofBaseApp{
     vector<char> incomingStr;
     
     ofSerial serial;
-		
+    ofImage bg;
+    
 };
