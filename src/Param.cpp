@@ -13,12 +13,12 @@ Param::Param(){
 }
 
 Param::Param(int _type, string _name, string _description, string _command){
-//    type = _type;
-//    name = _name;
-//    description = _description;
-//    command = _command;
+    type = _type;
+    name = _name;
+    description = _description;
+    command = _command;
   
-    cout << "new param added";
+    cout << "param addedd: " << name;
     // needs PIN identifier
 }
 

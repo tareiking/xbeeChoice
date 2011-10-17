@@ -1,6 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Option.h"
+#include "Param.h"
+#include "ofxXmlSettings.h"
+#include "CommandLoader.h"
 
 class testApp : public ofBaseApp{
 
@@ -30,7 +34,11 @@ class testApp : public ofBaseApp{
     vector<char> outgoingStr;
     vector<char> incomingStr;
     
+    CommandLoader loader;
     ofSerial serial;
     ofImage bg;
+    
+    ofxXmlSettings xml;
+    vector<Option*> options;
     
 };
