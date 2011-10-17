@@ -10,6 +10,12 @@
 
 #include <iostream>
 #include "ofMain.h"
+// Option.h
+//
+// Tarei King 2011
+// used to create objects of option. These are used to load x.bee 
+// primary pin / command options
+
 #include "Param.h"
 
 class Option {
@@ -32,6 +38,7 @@ public:
     void addParam(int _type, string _name, string _description, string _command);
     void setCommand(string _command);
     void draw();
+    void drawPin(bool right);
     void report();
     
     ofPoint getLoc();

@@ -1,10 +1,9 @@
+// Param.h
 //
-//  Param.h
-//  emptyExample
-//
-//  Created by Tarei on 17/10/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+// Tarei King 2011
+// Loads the sub-option level named Param's from XML 
+// converts to objects to use in memory
+
 
 #ifndef emptyExample_Param_h
 #define emptyExample_Param_h

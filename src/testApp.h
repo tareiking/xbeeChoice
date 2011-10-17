@@ -40,5 +40,8 @@ class testApp : public ofBaseApp{
     
     ofxXmlSettings xml;
     vector<Option*> options;
+    vector<Option*> testOpts;
+    vector<Option*> specialCommands;
+    vector<Option*> pinCommands;
     
 };

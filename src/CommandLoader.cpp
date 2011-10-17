@@ -15,6 +15,7 @@ CommandLoader::CommandLoader(){
         cout << "error loaded .bee file, check data/ folder\r" ;
 
     // make special Options
+    // make special Options  // clean up   
     xml.pushTag("special");
     int loop = xml.getNumTags("command");
     
@@ -48,7 +49,6 @@ CommandLoader::CommandLoader(){
         
         tmpOpt->report();
         special.push_back(tmpOpt);
-//        delete tmpOpt;
         xml.popTag();
     }
     
@@ -57,7 +57,7 @@ CommandLoader::CommandLoader(){
     
     
     // make special options
-    // make special Options
+    // make special Options // clean up
     xml.pushTag("pin");
     loop = xml.getNumTags("command");
     
@@ -93,8 +93,15 @@ CommandLoader::CommandLoader(){
         
         tmpOpt->report();
         pins.push_back(tmpOpt);
-//        delete tmpOpt;
         xml.popTag();
     }
     xml.popTag();    
 };
+
+vector<Option *> CommandLoader::getSpecial(){
+    return special;
+}
+
+vector<Option *> CommandLoader::getPins(){
+    return pins;
+}

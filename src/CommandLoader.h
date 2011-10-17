@@ -1,10 +1,8 @@
+// CommandLoader.h
 //
-//  CommandLoader.h
-//  emptyExample
-//
-//  Created by Tarei on 17/10/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+// Tarei King 2011
+// Loads the XML file and makes a pointer array of objects for use
+// with the x.bee configuration file
 
 #ifndef emptyExample_CommandLoader_h
 #define emptyExample_CommandLoader_h
@@ -22,8 +20,8 @@ class CommandLoader {
     
 public:
     CommandLoader();
-    vector<Option> getPins();
-    vector<Option> getSpecial();
+    vector<Option *> getPins();
+    vector<Option *> getSpecial();
 };
 
 

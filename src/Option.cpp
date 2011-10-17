@@ -39,6 +39,25 @@ void Option::draw(){
     ofSetRectMode(OF_RECTMODE_CENTER);
     int width = 15;
     ofRect(loc.x, loc.y, width, width);
+    ofDrawBitmapString(name, loc.x + 20, loc.y + 5);
+}
+
+void Option::drawPin(bool right){
+    
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    int width = 15;
+    
+    if(right == false){
+        ofRect(loc.x, loc.y, width, width);
+        ofDrawBitmapString(name, loc.x + 20, loc.y + 5);
+        ofDrawBitmapString(ofToString(pin), loc.x-30, loc.y+5);        
+    }
+    
+    if(right == true){
+        ofRect(loc.x, loc.y, width, width);
+        ofDrawBitmapString(name, loc.x + 40, loc.y + 5);
+        ofDrawBitmapString(ofToString(pin), loc.x+15, loc.y+5);
+    }
 }
 
 void Option::report(){

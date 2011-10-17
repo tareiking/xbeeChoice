@@ -47,10 +47,16 @@ void testApp::setup(){
     // setup serial and check devices
     serial.getDeviceList();
     if( serial.setup(0, 9600) ){ // hard coded, yuck
-//        printf("==================================-------- \r");        
-//        printf("Serial - 0, 9600 initiated. \r");
-//        printf("PRESS SPACE TO ENTER COMMAND MODE...... \r");        
+        printf("==================================-------- \r");        
+        printf("Serial - 0, 9600 initiated. \r");
+        printf("PRESS SPACE TO ENTER COMMAND MODE...... \r");        
+        printf("==================================-------- \r");                
     }; 
+    
+    
+    specialCommands = loader.getSpecial();
+    pinCommands = loader.getPins();
+    
     
     serial.flush();    
     ofSetFrameRate(30);
@@ -58,11 +64,8 @@ void testApp::setup(){
     ofEnableSmoothing();
     ofEnableAlphaBlending();
     
-    selectionOffsetX = 273;
-    selectionOffsetY = 80;
-
-    bg.loadImage("honey.png");
-        
+//    selectionOffsetX = 273;
+//    selectionOffsetY = 80;        
 }
 
 
@@ -72,7 +75,6 @@ char myByte = 0;
 void testApp::update(){
     
     cursorLoc.set(selectionOffsetX, selectionOffsetY);
-//    if(serialPortSelected)
 
     updateOutgoing(); // needs to move into OOP class and take serial*
     updateIncoming(); // needs to move into OOP class and take serial*
@@ -84,9 +86,29 @@ ofColor baseBlue = ofColor(81, 116, 146);
 //--------------------------------------------------------------
 void testApp::draw(){
     
-    for (int i = 0; i < options.size(); i++) {
-        options[i]->draw();
+    // draw special commands
+    ofPushMatrix();
+    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+    for (int i = 0; i < specialCommands.size(); i++) {
+        specialCommands[i]->draw();
     }
+    ofPopMatrix();
+    
+    
+    // draw pseudo xbee
+    ofPushMatrix();
+    ofTranslate(30, 30);
+    for (int i = 0; i < pinCommands.size(); i++) {
+        // draw left side
+        if(i<=10)
+           pinCommands[i]->drawPin(true);
+        
+        // draw right side
+        if(i>10){
+           pinCommands[i]->drawPin(true);
+        }
+    }
+    
 //    // draw message content
 //    ofPushMatrix();
 //        ofTranslate(ofGetWidth()/2+bg.width/2+30, ofGetHeight()/2-bg.height/4);    
