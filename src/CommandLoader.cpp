@@ -10,20 +10,22 @@
 
 CommandLoader::CommandLoader(){
     if (xml.loadFile("x.bee"))
-        cout << ".bee file loaded";
+        cout << ".bee file loaded" << "\r";
     else 
-        cout << "error loaded .bee file, check data/ folder";
+        cout << "error loaded .bee file, check data/ folder\r" ;
 
     // make special Options
     xml.pushTag("special");
-    for(int i=0; i<xml.getNumTags("command"); i++){
+    int loop = xml.getNumTags("command");
+    
+    for(int i=0; i<loop; i++){
         
         xml.pushTag("command", i);
 
         string name, description, command;
         name = xml.getValue("name", "");
         description = xml.getValue("description", "");
-        command = xml.getValue("command", "");        
+        command = xml.getValue("ATCommand", "");        
         
         // get location
         ofPoint loc;
@@ -32,24 +34,67 @@ CommandLoader::CommandLoader(){
         xml.popTag();
         
         // add to vector
-        Option *tmpOpt = new Option(loc, name, description, command);
+        Option * tmpOpt = new Option(loc, name, description, command);
 
-        // check params
-        if( xml.getNumTags("parameter") > 0){
-            for (int i=0; i < xml.getNumTags("parameter"); i++){
-                xml.pushTag("parameter");
-                name = xml.getValue("name", "");
-                description = xml.getValue("description", "");
-                command = xml.getValue("command", "");
-                tmpOpt->addParam(0, name, description, command);
+        if (xml.getNumTags("parameter") > 0){
+            for (int j=0; j <=xml.getNumTags("parameter")-1; j++){
+            xml.pushTag("parameter", j);
+            tmpOpt->addParam(0, xml.getValue("name", "-"),
+                                xml.getValue("description", "-"),
+                                xml.getValue("command", "-"));
+            xml.popTag();
+            }
+        }
+        
+        tmpOpt->report();
+        special.push_back(tmpOpt);
+//        delete tmpOpt;
+        xml.popTag();
+    }
+    
+    xml.popTag();    
+    
+    
+    
+    // make special options
+    // make special Options
+    xml.pushTag("pin");
+    loop = xml.getNumTags("command");
+    
+    for(int i=0; i<loop; i++){
+        
+        xml.pushTag("command", i);
+        
+        string name, description, command;
+        int pin;
+        name = xml.getValue("name", "");
+        description = xml.getValue("description", "");
+        command = xml.getValue("ATCommand", "");    
+        pin = xml.getValue("pin", 500);
+        
+        // get location
+        ofPoint loc;
+        xml.pushTag("location");
+        loc = ofPoint(xml.getValue("x", 0), xml.getValue("y", 0));
+        xml.popTag();
+        
+        // add to vector
+        Option * tmpOpt = new Option(loc, pin, name, description, command);
+        
+        if (xml.getNumTags("parameter") > 0){
+            for (int j=0; j <=xml.getNumTags("parameter")-1; j++){
+                xml.pushTag("parameter", j);
+                tmpOpt->addParam(0, xml.getValue("name", "-"),
+                                 xml.getValue("description", "-"),
+                                 xml.getValue("command", "-"));
                 xml.popTag();
             }
         }
         
-        
-
+        tmpOpt->report();
+        pins.push_back(tmpOpt);
+//        delete tmpOpt;
         xml.popTag();
     }
     xml.popTag();    
-    
 };

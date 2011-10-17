@@ -16,8 +16,8 @@
 
 class CommandLoader {
     ofxXmlSettings xml;
-    vector<Option> pins;
-    vector<Option> special;
+    vector<Option *> pins;
+    vector<Option *> special;
 
     
 public:

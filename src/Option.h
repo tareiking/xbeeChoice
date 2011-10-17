@@ -18,7 +18,7 @@ class Option {
     string name;
     string description;
     string command;
-    vector<Param> params;
+    vector<Param *> params;
 
     
 public:
@@ -32,15 +32,16 @@ public:
     void addParam(int _type, string _name, string _description, string _command);
     void setCommand(string _command);
     void draw();
+    void report();
     
     ofPoint getLoc();
-    vector <Param> getParams();
+    vector <Param *> getParams();
     int getPin();
     string getName();
     string getDescription();
     string getCommand();
     
-    
+    ~Option();
     
     
 };

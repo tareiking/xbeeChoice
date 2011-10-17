@@ -24,6 +24,7 @@ class Param {
 public:
     Param();
     Param(int _type, string _name, string _description, string _command);
+    ~Param();
     string getName();
     int getType();
     string getDescription();

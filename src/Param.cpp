@@ -18,7 +18,7 @@ Param::Param(int _type, string _name, string _description, string _command){
     description = _description;
     command = _command;
   
-    cout << "param addedd: " << name;
+//    cout << "param addedd: " << description << "\r";
     // needs PIN identifier
 }
 
@@ -42,3 +42,5 @@ string Param::getCommand(){
 int Param::getPin(){
     return parentPin;
 }
+
+Param::~Param(){};

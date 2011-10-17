@@ -25,18 +25,29 @@ Option::Option(ofPoint _loc, string _name,  string _description, string _command
        name = _name;
        description = _description;
        command = _command;   
+       pin = 999;
 }
 
 // add parameter to params vector for later 
 void Option::addParam(int _type, string _name, string _description, string _command){
     Param *temp = new Param(_type, _name, _description, _command);
-    temp->getName();
+//    temp->getName();
+    params.push_back(temp);
 }
 
 void Option::draw(){
     ofSetRectMode(OF_RECTMODE_CENTER);
     int width = 15;
     ofRect(loc.x, loc.y, width, width);
+}
+
+void Option::report(){
+    cout << "============== option details============\r"
+    << "name: " << name << "\r"
+    << "pin: " << pin << "\r"
+    << "description: " << description << "\r"    
+    << "command: " << command << "\r"    
+    << "params count: " << params.size() << "\r"    ;
 }
 
 // MORE FUCKEN SETTERS
@@ -66,7 +77,7 @@ ofPoint Option::getLoc(){
     return loc;
 }
 
-vector <Param> Option::getParams(){
+vector <Param *> Option::getParams(){
     return params;
 }
 
@@ -84,4 +95,7 @@ string Option::getDescription(){
 
 string Option::getCommand(){
     return command;
+}
+
+Option::~Option(){
 }
