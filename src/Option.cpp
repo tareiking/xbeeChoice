@@ -69,6 +69,15 @@ void Option::report(){
     << "params count: " << params.size() << "\r"    ;
 }
 
+void Option::reportParams(){
+    cout << "params: ";
+    for (int i=0; i<params.size(); i++){
+        cout << "[" << params[i]->getName() << "]";        
+        cout << " " << params[i]->getDescription() << "  ";
+    }
+    cout <<"\r";
+}
+
 // MORE FUCKEN SETTERS
 
 void Option::setLoc(ofPoint &_loc){

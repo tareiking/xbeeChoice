@@ -23,7 +23,6 @@ Param::Param(int _type, string _name, string _description, string _command){
 }
 
 string Param::getName(){
-    cout << name;
     return name;
 }
 

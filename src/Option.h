@@ -40,6 +40,7 @@ public:
     void draw();
     void drawPin(bool right);
     void report();
+    void reportParams();
     
     ofPoint getLoc();
     vector <Param *> getParams();

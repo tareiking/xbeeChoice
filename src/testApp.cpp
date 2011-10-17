@@ -10,40 +10,11 @@ string msg;
 int selectionOffsetX;
 int selectionOffsetY;
 bool bSecondOptions;
+string message;
 
 ofPoint(cursorLoc);
 
-void testApp::setup(){
-    // test option
-
-//    int yOffset = 10;
-//    for (int i = 1; i < 20; i++){
-//        ofPoint tempPnt =  ofPoint(10, yOffset);
-//        Option *opt = new Option(tempPnt, 1, "PIN01", "Controls something in PIN01", "0");
-//        opt->addParam(0, "enable", "  ", "1");
-//        opt->addParam(0, "disable", "  ", "2");    
-//        
-//        options.push_back(opt);     
-//        yOffset += 20;
-//    }
-//    
-//    if(xml.loadFile("x.bee")){
-//        cout << "File loaded \r"; 
-//    } else {
-//        cout << "File not loaded, check data/ folder";
-//    }
-//
-//    
-//    // load misc commands .bee (xml)
-//    xml.pushTag("special");
-//    for(int i=0; i<xml.getNumTags("command"); i++){
-//        xml.pushTag("command", i);
-//        cout << "\r" << xml.getValue("name", "") << "\r";
-//        xml.popTag();
-//    }
-//    xml.popTag();
-//    xml.popTag();
-    
+void testApp::setup(){    
     // setup serial and check devices
     serial.getDeviceList();
     if( serial.setup(0, 9600) ){ // hard coded, yuck
@@ -64,8 +35,8 @@ void testApp::setup(){
     ofEnableSmoothing();
     ofEnableAlphaBlending();
     
-//    selectionOffsetX = 273;
-//    selectionOffsetY = 80;        
+    message = "AT";
+    
 }
 
 
@@ -74,7 +45,10 @@ char myByte = 0;
 
 void testApp::update(){
     
-    cursorLoc.set(selectionOffsetX, selectionOffsetY);
+    cursorLoc = (mouseX, mouseY);
+    
+    // check if cursor in  dist of command
+    
 
     updateOutgoing(); // needs to move into OOP class and take serial*
     updateIncoming(); // needs to move into OOP class and take serial*
@@ -88,8 +62,19 @@ void testApp::draw(){
     
     // draw special commands
     ofPushMatrix();
+    ofSetColor(255, 255, 255);
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     for (int i = 0; i < specialCommands.size(); i++) {
+        
+        cout << "opt.x: " << specialCommands[i]->getLoc().x << "\r";
+        cout << "opt.y: " << specialCommands[i]->getLoc().y << "\r";        
+        cout << "cur.x: " << cursorLoc.x << "\r";
+        cout << "cur.y: " << cursorLoc.y << "\r";
+        
+        
+        if(ofDist(specialCommands[i]->getLoc().x, specialCommands[i]->getLoc().y, cursorLoc.x, cursorLoc.y) < 10){
+            printf("inside command");
+        }
         specialCommands[i]->draw();
     }
     ofPopMatrix();
@@ -100,20 +85,22 @@ void testApp::draw(){
     ofTranslate(30, 30);
     for (int i = 0; i < pinCommands.size(); i++) {
         // draw left side
-        if(i<=10)
-           pinCommands[i]->drawPin(true);
-        
+        if(i<=10){
+            pinCommands[i]->drawPin(true);
+        }
         // draw right side
         if(i>10){
            pinCommands[i]->drawPin(true);
         }
     }
     
-//    // draw message content
-//    ofPushMatrix();
-//        ofTranslate(ofGetWidth()/2+bg.width/2+30, ofGetHeight()/2-bg.height/4);    
-//        ofDrawBitmapString("Pin 20 / parameters: 0-5",0,0);        
-//    ofPopMatrix();    
+    // draw message content
+    ofPushMatrix();
+        ofTranslate(30, ofGetHeight()-60);    
+        ofSetColor(255, 0, 0);
+        ofDrawBitmapString("MESSAGE TO SEND:  ",0,0);
+        ofDrawBitmapString(message,0,20);        
+    ofPopMatrix();    
 //    
 //
 //    // draw the pseudo xbee

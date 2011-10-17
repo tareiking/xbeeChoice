@@ -43,11 +43,12 @@ CommandLoader::CommandLoader(){
             tmpOpt->addParam(0, xml.getValue("name", "-"),
                                 xml.getValue("description", "-"),
                                 xml.getValue("command", "-"));
+//                cout << xml.getValue("name", "");
             xml.popTag();
             }
         }
         
-        tmpOpt->report();
+//        tmpOpt->report();
         special.push_back(tmpOpt);
         xml.popTag();
     }
@@ -87,11 +88,14 @@ CommandLoader::CommandLoader(){
                 tmpOpt->addParam(0, xml.getValue("name", "-"),
                                  xml.getValue("description", "-"),
                                  xml.getValue("command", "-"));
+//                cout << xml.getValue("name", "");
                 xml.popTag();
             }
+            
         }
         
-        tmpOpt->report();
+//        tmpOpt->report();
+//        tmpOpt->reportParams();
         pins.push_back(tmpOpt);
         xml.popTag();
     }
