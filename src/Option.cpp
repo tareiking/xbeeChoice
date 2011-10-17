@@ -73,11 +73,21 @@ void Option::reportParams(){
     cout << "params: ";
     for (int i=0; i<params.size(); i++){
         cout << "[" << params[i]->getName() << "]";        
-        cout << " " << params[i]->getDescription() << "  ";
+        cout << "" << params[i]->getDescription() << "  ";
     }
     cout <<"\r";
 }
 
+void Option::drawParams(int x){
+    int offset = 30;
+    for (int i=0; i<params.size(); i++){
+        ofSetColor(255, 255, 255);
+        ofRect(x, offset, 15, 15);
+//        ofDrawBitmapString(", x+20, offset);
+        
+        offset += 30;
+    }
+}
 // MORE FUCKEN SETTERS
 
 void Option::setLoc(ofPoint &_loc){

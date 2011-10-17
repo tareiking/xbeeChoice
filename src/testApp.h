@@ -5,6 +5,7 @@
 #include "Param.h"
 #include "ofxXmlSettings.h"
 #include "CommandLoader.h"
+#include "MyTestObject.h"
 
 class testApp : public ofBaseApp{
 
@@ -27,7 +28,7 @@ class testApp : public ofBaseApp{
         
         void updateIncoming();
         void updateOutgoing();
-
+    
     bool mouseInRect(int x, int y, int width, int height);
     
     vector<ofPoint> guiPoints;
@@ -43,5 +44,8 @@ class testApp : public ofBaseApp{
     vector<Option*> testOpts;
     vector<Option*> specialCommands;
     vector<Option*> pinCommands;
+    
+    vector<MyTestObject*> objects;
+
     
 };

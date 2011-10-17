@@ -41,6 +41,7 @@ public:
     void drawPin(bool right);
     void report();
     void reportParams();
+    void drawParams(int x);
     
     ofPoint getLoc();
     vector <Param *> getParams();
@@ -49,7 +50,7 @@ public:
     string getDescription();
     string getCommand();
     
-    ~Option();
+   virtual  ~Option();
     
     
 };

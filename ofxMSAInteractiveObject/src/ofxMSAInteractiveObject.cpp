@@ -45,7 +45,11 @@ ofxMSAInteractiveObject::ofxMSAInteractiveObject() {
 }
 
 ofxMSAInteractiveObject::~ofxMSAInteractiveObject() {
-	disableAllEvents();
+	try {
+		disableAllEvents();
+	} catch (Poco::SystemException) {
+		return; // we're leaving anyways so no need to delete
+	}
 }
 
 void ofxMSAInteractiveObject::killMe() {
@@ -208,7 +212,7 @@ void ofxMSAInteractiveObject::_mousePressed(ofMouseEventArgs &e) {
 	
 	if(verbose) printf("ofxMSAInteractiveObject::_mousePressed(x: %i, y: %i, button: %i)\n", x, y, button);
 	if(!enabled) return;
-
+    
 	_mouseX = x;
 	_mouseY = y;
 	_mouseButton = button;
@@ -230,11 +234,11 @@ void ofxMSAInteractiveObject::_mouseDragged(ofMouseEventArgs &e) {
 	
 	if(verbose) printf("ofxMSAInteractiveObject::_mouseDragged(x: %i, y: %i, button: %i)\n", x, y, button);
 	if(!enabled) return;
-
+    
 	_mouseX = x;
 	_mouseY = y;
 	_mouseButton = button;
-
+    
 	if(hitTest(x, y)) {						// if mouse is over the object
 		if(!_mouseOver) {						// if wasn't over previous frame
 			//				onPress(x, y);							// call onPress - maybe not
@@ -259,7 +263,7 @@ void ofxMSAInteractiveObject::_mouseReleased(ofMouseEventArgs &e) {
 	
 	if(verbose) printf("ofxMSAInteractiveObject::_mouseReleased(x: %i, y: %i, button: %i)\n", x, y, button);
 	if(!enabled) return;
-
+    
 	_mouseX = x;
 	_mouseY = y;
 	_mouseButton = button;

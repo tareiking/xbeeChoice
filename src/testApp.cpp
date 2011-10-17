@@ -11,6 +11,9 @@ int selectionOffsetX;
 int selectionOffsetY;
 bool bSecondOptions;
 string message;
+int highlighted;
+int highlightedPin;
+bool bShowSecondary;
 
 ofPoint(cursorLoc);
 
@@ -23,17 +26,20 @@ void testApp::setup(){
         printf("PRESS SPACE TO ENTER COMMAND MODE...... \r");        
         printf("==================================-------- \r");                
     }; 
-    
-    
+        
     specialCommands = loader.getSpecial();
     pinCommands = loader.getPins();
     
+    cursorLoc = ofPoint(340, 40);
     
     serial.flush();    
     ofSetFrameRate(30);
     ofSetVerticalSync(true);
     ofEnableSmoothing();
     ofEnableAlphaBlending();
+    
+    highlightedPin = 99;
+    bShowSecondary = false;
     
     message = "AT";
     
@@ -45,7 +51,7 @@ char myByte = 0;
 
 void testApp::update(){
     
-    cursorLoc = (mouseX, mouseY);
+//    cursorLoc = (mouseX, mouseY);
     
     // check if cursor in  dist of command
     
@@ -60,21 +66,12 @@ ofColor baseBlue = ofColor(81, 116, 146);
 //--------------------------------------------------------------
 void testApp::draw(){
     
-    // draw special commands
+    ofRectMode(OF_RECTMODE_CORNER);
+//    
+//    // draw special commands
     ofPushMatrix();
     ofSetColor(255, 255, 255);
-    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     for (int i = 0; i < specialCommands.size(); i++) {
-        
-        cout << "opt.x: " << specialCommands[i]->getLoc().x << "\r";
-        cout << "opt.y: " << specialCommands[i]->getLoc().y << "\r";        
-        cout << "cur.x: " << cursorLoc.x << "\r";
-        cout << "cur.y: " << cursorLoc.y << "\r";
-        
-        
-        if(ofDist(specialCommands[i]->getLoc().x, specialCommands[i]->getLoc().y, cursorLoc.x, cursorLoc.y) < 10){
-            printf("inside command");
-        }
         specialCommands[i]->draw();
     }
     ofPopMatrix();
@@ -82,8 +79,16 @@ void testApp::draw(){
     
     // draw pseudo xbee
     ofPushMatrix();
-    ofTranslate(30, 30);
     for (int i = 0; i < pinCommands.size(); i++) {
+        if(ofDist(cursorLoc.x, cursorLoc.y, pinCommands[i]->getLoc().x, pinCommands[i]->getLoc().y)< 10){
+            highlighted = i;
+        }
+        
+        if(i == highlightedPin)
+            ofSetColor(255, 0, 0);
+        else 
+            ofSetColor(255, 255, 255);
+        
         // draw left side
         if(i<=10){
             pinCommands[i]->drawPin(true);
@@ -93,6 +98,12 @@ void testApp::draw(){
            pinCommands[i]->drawPin(true);
         }
     }
+    ofPopMatrix();
+    
+    // draw cursor @ pin 20
+    ofPushMatrix();
+//        findOptionsByPin(int _pin)act
+    ofPopMatrix();
     
     // draw message content
     ofPushMatrix();
@@ -101,6 +112,16 @@ void testApp::draw(){
         ofDrawBitmapString("MESSAGE TO SEND:  ",0,0);
         ofDrawBitmapString(message,0,20);        
     ofPopMatrix();    
+    ofTranslate(400, 500);
+    // draw secondary
+    if(bShowSecondary){
+        ofPushMatrix();
+            pinCommands[highlightedPin]->drawParams(0);
+
+        ofPopMatrix();
+    }
+
+    
 //    
 //
 //    // draw the pseudo xbee
@@ -193,65 +214,51 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-
+    // get current position on screen
+    cout << highlighted;
 
 }
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
     if(key == 32){
+        // go to secondary options
+        // get current loop in pin options which equates to the PIN options
+        
+        
+        // search option for the params of that value
+        // show params
+        // move cursor parameters to secondary screen
+    }
+    
+    if(key == OF_KEY_RETURN){
         // test
         serial.flush();
         printf("Entering Command Mode:  ");
         unsigned char buffer[3];
         buffer[0] = buffer[1] = buffer[2] = '+';
-        serial.writeBytes(buffer, 3);
+        serial.writeBytes(buffer, 3);        
     }
     
     if(key == OF_KEY_UP){
-        selectionOffsetY -= 30;        
-        if(selectionOffsetY < 80)
-            selectionOffsetY = 80;
-        
-//        serial.flush();
-//        cout << "up pressed, sent:  ";
-//        unsigned char buffer[6];
-//        buffer[0]='A';
-//        buffer[1]='T';
-//        buffer[2]='D';        
-//        buffer[3]='0';        
-//        buffer[4]='5';                
-//        buffer[5]='\r';
-//        serial.writeBytes(buffer,6);
+        cursorLoc.y -= 30;        
+        if(cursorLoc.y < 40)
+            cursorLoc.y = 40;
+//        cout << cursorLoc.y;
     }
     
     if(key == OF_KEY_DOWN){        
-        selectionOffsetY += 30;
-        if(selectionOffsetY > 350)
-            selectionOffsetY = 350;
-        cout << selectionOffsetY;
-//        serial.flush();
-//        cout << "down pressed, sent:  ";
-//        outgoingStr.clear();
-//        outgoingStr = stringToCharVector("ATD15", true);
-        
+        cursorLoc.y += 30;
+        if(cursorLoc.y > 350)
+            cursorLoc.y = 350;
     }
     
     if(key == OF_KEY_LEFT){
-        selectionOffsetX = 57;
-        cout << selectionOffsetX;
-//        serial.flush();
-//        cout << "left pressed, sent:  ";
-//        outgoingStr.clear();
-//        outgoingStr = stringToCharVector("ATD05", true);        
+        cursorLoc.x = 57;
     }
     
     if(key == OF_KEY_RIGHT){
-        selectionOffsetX = 273;
-        //        serial.flush();
-        //        cout << "left pressed, sent:  ";
-        //        outgoingStr.clear();
-        //        outgoingStr = stringToCharVector("ATD05", true);        
+        cursorLoc.x = 340;
     }    
 }
 
@@ -323,6 +330,7 @@ void testApp::updateIncoming(){
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
 
+
 }
 
 //--------------------------------------------------------------
@@ -353,16 +361,27 @@ void testApp::mousePressed(int x, int y, int button){
 //        
 //    }
     
-    // draw rect that is too the right and high enough
-    ofRect(0, 0, 100, 50);
-    ofPushMatrix();
-    ofTranslate(x, y);
-    ofSetColor(0, 0, 255);
+    for(int i=0; i<pinCommands.size(); i++){
+        int pinX =pinCommands[i]->getLoc().x;
+        int pinY =pinCommands[i]->getLoc().y;
+        
+//        cout << pinX << x << "\r";
+//        cout << pinY << y << "\r";
+        if(ofDist(pinX, pinY, x, y) < 20){
+            ofSetColor(255, 0,0);
+            ofRect(pinX, pinY, 15, 15);
+            cout << "in range of " << i <<"\r";
+            highlightedPin = i;
+            
+            bShowSecondary  = true;
+            
+            pinCommands[highlightedPin]->reportParams();    
+            
+        }
+        
+    }
 
-    cout << "pressed";
-    ofPopMatrix();
-    
-    
+    cout << bShowSecondary;
     
 }
 
