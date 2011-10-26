@@ -29,6 +29,8 @@ class testApp : public ofBaseApp{
         void updateIncoming();
         void updateOutgoing();
     
+    void reportIncoming();
+    
     bool mouseInRect(int x, int y, int width, int height);
     
     vector<ofPoint> guiPoints;

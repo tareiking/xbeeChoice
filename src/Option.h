@@ -24,7 +24,6 @@ class Option {
     string name;
     string description;
     string command;
-    vector<Param *> params;
 
     
 public:
@@ -37,20 +36,23 @@ public:
     void setDescription(string _description);
     void addParam(int _type, string _name, string _description, string _command);
     void setCommand(string _command);
-    void draw();
-    void drawPin(bool right);
+    void draw(bool selected);
+    void drawPin(bool selected);
     void report();
     void reportParams();
-    void drawParams(int x);
+    void drawParams(int x, int selected);
     
     ofPoint getLoc();
     vector <Param *> getParams();
+    vector <ofPoint> getParamsLoc();
     int getPin();
     string getName();
     string getDescription();
     string getCommand();
+    vector<Param *> params;
+
     
-   virtual  ~Option();
+    virtual  ~Option();
     
     
 };

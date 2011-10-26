@@ -23,12 +23,16 @@ class Param {
 public:
     Param();
     Param(int _type, string _name, string _description, string _command);
-    virtual  ~Param();
+    
+    void setLoc(int x, int y);
+    
+    ofPoint getLoc();    
     string getName();
     int getType();
     string getDescription();
     string getCommand();
     int getPin();
+    virtual  ~Param();
 };
 
 

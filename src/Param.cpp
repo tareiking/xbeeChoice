@@ -17,10 +17,18 @@ Param::Param(int _type, string _name, string _description, string _command){
     name = _name;
     description = _description;
     command = _name;
-  
-//    cout << "param addedd: " << description << "\r";
-    // needs PIN identifier
 }
+
+void Param::setLoc(int x, int y){
+    loc.x = x;
+    loc.y = y;
+}
+
+ofPoint Param::getLoc(){
+    ofPoint tloc = ofPoint(loc.x, loc.y);
+    return tloc;
+}
+
 
 string Param::getName(){
     return name;

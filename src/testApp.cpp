@@ -6,21 +6,42 @@
 
 vector<string> guiStr;
 bool bInCommandMode;
-string msg;
+string incomingMsg;
 int selectionOffsetX;
 int selectionOffsetY;
 bool bSecondOptions;
 string message;
-int highlighted;
+int highlightedCommand;
 int highlightedPin;
+int highlightedSecondary;
+
 bool bShowSecondary;
+vector<ofPoint> secondaryLoc;
+char myByte = 0;
 
 ofPoint(cursorLoc);
 
+ofColor baseBlue = ofColor(81, 116, 146);
+ofColor darkGrey = ofColor(33,33,33);
+ofColor lightGrey = ofColor(222, 222, 222);
+
+struct response{
+    int option;
+    int param;
+    string description;
+};
+
+
 void testApp::setup(){    
+    ofSetFrameRate(30);
+    ofSetVerticalSync(true);
+    ofEnableSmoothing();
+    ofEnableAlphaBlending();
+
     // setup serial and check devices
-    serial.getDeviceList();
-    if( serial.setup(0, 9600) ){ // hard coded, yuck
+    serial.listDevices();
+
+    if( serial.setup(0, 9600) ){ // hard coded, FIXME
         printf("==================================-------- \r");        
         printf("Serial - 0, 9600 initiated. \r");
         printf("PRESS SPACE TO ENTER COMMAND MODE...... \r");        
@@ -31,48 +52,40 @@ void testApp::setup(){
     pinCommands = loader.getPins();
     
     cursorLoc = ofPoint(340, 40);
-    
-    serial.flush();    
-    ofSetFrameRate(30);
-    ofSetVerticalSync(true);
-    ofEnableSmoothing();
-    ofEnableAlphaBlending();
-    
-    highlightedPin = 99;
+        
+    highlightedPin = 99; // used to determine pin or special command
     bShowSecondary = false;
     
+    serial.flush();    
+
     message = "AT";
+    
     
 }
 
 
-char myByte = 0;
-
-
 void testApp::update(){
-    
-//    cursorLoc = (mouseX, mouseY);
-    
-    // check if cursor in  dist of command
-    
-
     updateOutgoing(); // needs to move into OOP class and take serial*
     updateIncoming(); // needs to move into OOP class and take serial*
     
 } 
 
-ofColor baseBlue = ofColor(81, 116, 146);
 
-//--------------------------------------------------------------
 void testApp::draw(){
     
     ofRectMode(OF_RECTMODE_CORNER);
-//    
-//    // draw special commands
+    ofSetColor(87,87,87);
+    ofRect(0, 0, ofGetWidth(), ofGetHeight());
+    ofSetColor(lightGrey);
+    
+   // draw special commands
     ofPushMatrix();
-    ofSetColor(255, 255, 255);
     for (int i = 0; i < specialCommands.size(); i++) {
-        specialCommands[i]->draw();
+        if(i == highlightedCommand)
+            specialCommands[i]->draw(true);
+        else 
+            ofSetColor(255, 255, 255);
+        specialCommands[i]->draw(false);
     }
     ofPopMatrix();
     
@@ -81,186 +94,205 @@ void testApp::draw(){
     ofPushMatrix();
     for (int i = 0; i < pinCommands.size(); i++) {
         if(ofDist(cursorLoc.x, cursorLoc.y, pinCommands[i]->getLoc().x, pinCommands[i]->getLoc().y)< 10){
-            highlighted = i;
+            highlightedPin = i;
         }
-        
         if(i == highlightedPin)
-            ofSetColor(255, 0, 0);
-        else 
-            ofSetColor(255, 255, 255);
-        
-        // draw left side
-        if(i<=10){
-            pinCommands[i]->drawPin(true);
-        }
-        // draw right side
-        if(i>10){
-           pinCommands[i]->drawPin(true);
+            pinCommands[i]->draw(true);
+        else {
+            pinCommands[i]->draw(false);
         }
     }
     ofPopMatrix();
     
-    // draw cursor @ pin 20
-    ofPushMatrix();
-//        findOptionsByPin(int _pin)act
-    ofPopMatrix();
+    // draw secondary options
+    if(bShowSecondary){
+        // check which pin is selected
+        if(highlightedPin != 99 && pinCommands[highlightedPin]->getParams().size()>0){
+            secondaryLoc.empty();
+            
+            pinCommands[highlightedPin]->drawParams(600, highlightedSecondary);
+            secondaryLoc= pinCommands[highlightedPin]->getParamsLoc();
+        }
+        else{
+            secondaryLoc.empty();
+            specialCommands[highlightedCommand]->drawParams(600, highlightedSecondary);      
+            secondaryLoc= specialCommands[highlightedCommand]->getParamsLoc();
+        }
+
+    }    
     
     // draw message content
     ofPushMatrix();
         ofTranslate(30, ofGetHeight()-60);    
-        ofSetColor(255, 0, 0);
-        ofDrawBitmapString("MESSAGE TO SEND:  ",0,0);
-        ofDrawBitmapString(message,0,20);        
+        if (message == "AT")
+            ofSetColor(255, 179, 179);
+        else
+            ofSetColor(162, 171, 165);
+        ofRect(0, -20, 450, 45);
+        ofSetColor(13, 13, 13);
+        ofDrawBitmapString("MESSAGE TO SEND  ",2,-21);
+        ofDrawBitmapString(message,10,10);        
     ofPopMatrix();    
-    ofTranslate(400, 500);
-    // draw secondary
-    if(bShowSecondary){
-        ofPushMatrix();
-            pinCommands[highlightedPin]->drawParams(0);
-
-        ofPopMatrix();
-    }
+    
 
     
-//    
-//
-//    // draw the pseudo xbee
-//    ofPushMatrix();
-//    ofTranslate(50, 50);
-//
-//        ofSetColor(baseBlue);   
-//        ofRect(0, 0, 250, 330);
-//        ofSetColor(255, 255, 255);
-//        ofDrawBitmapString("Select your PIN", 10,20);    
-//    
-//    int y = 10;
-//    int offset = 20;
-//    int yBottom = 330;
-//    for (int i = 1; i < 11; i++) {
-//        ofRectMode(OF_RECTMODE_CENTER);
-//        ofSetColor(255, 0, 0);
-//
-//        
-//        ofRect(10,y+offset, 15, 15);
-//        ofRect(225,y+offset, 15, 15);        
-//        
-//        ofSetColor(255, 255, 255);
-//        // should get information from xml
-//        string tempStrLeft = "PIN " + ofToString(i);
-//        ofDrawBitmapString(tempStrLeft, ofPoint(35, y+offset+12));
-//        
-//        string tempStrRight = "PIN " + ofToString(i+10);
-//        ofDrawBitmapString(tempStrRight, ofPoint(170,yBottom-offset+2)); // start from bottom up
-//        
-//        
-//        offset += 30;
-//    }
-//    ofPopMatrix();    
-//
-//    
-//    // loads the items for the secondary items
-//    ofPushMatrix();    
-//    
-//        ofTranslate(350, 50);
-//        ofSetColor(baseBlue);   
-//        ofRect(0, 0, 400, 200); // draw bounding box
-//        ofSetColor(255, 255, 255);
-//        ofDrawBitmapString("Secondary options", 20, 20);
-//
-//    // TODO:  load values from XML
-//        ofDrawBitmapString("'0' - Disbaled", 40, 65);        
-//        ofDrawBitmapString("'1' - DIOUT", 40, 85);        
-//        ofDrawBitmapString("'2' - DIN", 40, 105);        
-//        ofSetColor(255, 0, 0); // draw option boxes
-//        ofRect(20, 55, 15, 15);
-//        ofRect(20, 75, 15, 15);    
-//        ofRect(20, 95, 15, 15);        
-//
-//    ofPopMatrix();
-//    
-//    // loads display box to check 
-//    
-//    ofPushMatrix();
-//    ofTranslate(350, 275);
-//        ofSetColor(baseBlue);
-//        ofRect(0, 0, 400, 100);
-//        ofSetColor(255, 255, 255);
-//    ofDrawBitmapString("CONSOLE LOG/ SERIAL INFO", 20, 20);
-//    ofPopMatrix();
-//    
-//    
-//    // draw the pseudo selection box
-//    ofPushMatrix();
-//    // move to box center pin 20 (top right)
-//    // coords are 300(rect start) + 225 (x), 50 + 20 + offset (10) (y) - offset
-//        ofTranslate(selectionOffsetX, selectionOffsetY);
-//        ofRectMode(OF_RECTMODE_CENTER);
-//        ofSetColor(255, 255, 255);
-//        ofRect(0, 0, 18,18);
-//    
-//    // check global vairables to determine what message to show
-//    ofPopMatrix();
     
-//    for (int i = 0; i < incomingStr.size(); i++) {
-//        printf("%c", incomingStr[i]);
-//        msg += incomingStr[i];
-//    }
+
+    
+    for (int i = 0; i < incomingStr.size(); i++) {
+        printf("%c", incomingStr[i]);
+        incomingMsg += incomingStr[i];
+     }
       
-    ofDrawBitmapString(msg, ofGetWidth()/2, ofGetHeight()-200);
+    ofSetColor(255, 255, 255);
+    ofDrawBitmapString("FROM XBEE  ",2,-21);
+    ofDrawBitmapString(incomingMsg,10,10);        
+    ofPopMatrix();  
     
+    ofDrawBitmapString(incomingMsg, ofGetWidth()/2, ofGetHeight()-200);
     incomingStr.clear();
     
 }
 
-//--------------------------------------------------------------
-void testApp::keyPressed(int key){
-    // get current position on screen
-    cout << highlighted;
+void testApp::keyPressed(int key){}
 
-}
-
-//--------------------------------------------------------------
 void testApp::keyReleased(int key){
     if(key == 32){
-        // go to secondary options
-        // get current loop in pin options which equates to the PIN options
-        
-        
-        // search option for the params of that value
-        // show params
-        // move cursor parameters to secondary screen
-    }
-    
-    if(key == OF_KEY_RETURN){
         // test
         serial.flush();
         printf("Entering Command Mode:  ");
         unsigned char buffer[3];
         buffer[0] = buffer[1] = buffer[2] = '+';
-        serial.writeBytes(buffer, 3);        
+        serial.writeBytes(buffer, 3);             
     }
     
-    if(key == OF_KEY_UP){
-        cursorLoc.y -= 30;        
-        if(cursorLoc.y < 40)
-            cursorLoc.y = 40;
-//        cout << cursorLoc.y;
+    else if(key == OF_KEY_RETURN){
+        cout << "\rMessage sent: " << message << "\r";
+        vector<char> chars = stringToCharVector(message, true);
+        unsigned char buffer[chars.size()];
+        for (int i =0; i<chars.size(); i++){
+            buffer[i]=chars[i];
+        }
+//        serial.writeBytes(buffer, chars.size());
+        outgoingStr = chars;
+        message = "AT";
+
     }
     
-    if(key == OF_KEY_DOWN){        
-        cursorLoc.y += 30;
-        if(cursorLoc.y > 350)
-            cursorLoc.y = 350;
+    else if(key == OF_KEY_UP){
+//        cursorLoc.y -= 30;        
+//        if(cursorLoc.y < 40)
+//            cursorLoc.y = 40;
     }
     
-    if(key == OF_KEY_LEFT){
-        cursorLoc.x = 57;
+   else if(key == OF_KEY_DOWN){        
+//        cursorLoc.y += 30;
+//        if(cursorLoc.y > 350)
+//            cursorLoc.y = 350;
     }
     
-    if(key == OF_KEY_RIGHT){
-        cursorLoc.x = 340;
+  else  if(key == OF_KEY_LEFT){
+//        cursorLoc.x = 57;
+    }
+    
+  else  if(key == OF_KEY_RIGHT){
+//        cursorLoc.x = 340;
     }    
+    
+  else  if(key == 127){ // delete
+        message = "AT";
+    }
+    
+    else 
+        message += key; // manual override
 }
+
+void testApp::mouseMoved(int x, int y ){}
+
+void testApp::mouseDragged(int x, int y, int button){}
+
+void testApp::mousePressed(int x, int y, int button){
+    
+    ofPoint mousePosition = ofPoint(x, y);
+    cout << "mouse x: " << x << " y: " << y;
+    
+    for(int i=0; i<pinCommands.size(); i++){
+        for(int j=0; j<specialCommands.size(); j++){
+            
+            
+            if ( ofDist(pinCommands[i]->getLoc().x,  pinCommands[i]->getLoc().y, mousePosition.x, mousePosition.y)<10){
+                ofLog(OF_LOG_ERROR,"mouse clicked in pin command \r");   
+                highlightedPin = i;
+                highlightedCommand = 99;
+                if(pinCommands[i]->getParams().size() > 0)
+                    bShowSecondary = true;
+                else
+                    bShowSecondary = false;
+                message += pinCommands[i]->getCommand();
+                goto outofloop;
+            }
+            
+            
+            if ( ofDist(specialCommands[j]->getLoc().x,  specialCommands[j]->getLoc().y, mousePosition.x, mousePosition.y)<10){
+                ofLog(OF_LOG_ERROR,"close to special command \r");  
+                highlightedCommand = j;
+                highlightedPin = 99;
+                if(specialCommands[j]->getParams().size() > 0)
+                    bShowSecondary = true;
+                else 
+                    bShowSecondary = false;
+                message += specialCommands[j]->getCommand();
+                goto outofloop;
+                
+
+            }
+
+        }
+    }
+    
+    
+    for(int k=0; k<secondaryLoc.size(); k++){
+
+        ofLog(OF_LOG_ERROR, "mouse in secondary options"); // FIXME:  Might be where the OutOfRange exceptions come from for the secondaryLoc errors??
+//        cout << " pinLoc x: " << pinCommands[i]->getLoc().x << " y: " <<pinCommands[i]->getLoc().y << "\r";        
+        
+        mousePosition.x = 600;
+        if ( ofDist(secondaryLoc[k].x,  secondaryLoc[k].y, mousePosition.x, mousePosition.y)<10){
+            highlightedSecondary = k;
+
+            if( highlightedPin != 99){
+                message += pinCommands[highlightedPin]->params[highlightedSecondary]->getCommand();
+//                message += ","; // for command stacking                
+                goto outofloop;
+            }
+            else if ( highlightedPin == 99 ){
+                message += specialCommands[highlightedCommand]->params[highlightedSecondary]->getCommand();
+//                message += ","; // for command stacking                
+                goto outofloop;
+            }
+            else {
+                goto outofloop;
+            }
+
+        }
+        
+
+        
+    }
+    
+    outofloop:
+    ofLog(OF_LOG_VERBOSE, "out of loop");
+    
+}
+
+
+void testApp::mouseReleased(int x, int y, int button){}
+
+void testApp::windowResized(int w, int h){}
+
+void testApp::gotMessage(ofMessage msg){}
+
+void testApp::dragEvent(ofDragInfo dragInfo){}
 
 #pragma mark
 #pragma mark ADDED FUNCTIONS
@@ -268,16 +300,16 @@ void testApp::keyReleased(int key){
 
 vector<char> testApp::stringToCharVector(string _incoming, bool _addCarriageReturn){
     vector<char> result;
-//    cout << _incoming.size(); // check
-
+    //    cout << _incoming.size(); // check
+    
     int size = _incoming.size();
     char newstr[size]; // heres the fucken problem, was char *newstr = new char[size]; size pointer is 4bytes long?
     
-//    cout<< sizeof(newstr);
+    //    cout<< sizeof(newstr);
     strcpy( newstr, _incoming.c_str() );
     
     for (int i = 0; i < sizeof(newstr); i ++) {
-//        printf("%c", (char)newstr[i]); // check
+        //        printf("%c", (char)newstr[i]); // check
         result.push_back((char)newstr[i]);
     }
     
@@ -307,14 +339,9 @@ void testApp::updateIncoming(){
     
     
     if ( myByte == OF_SERIAL_NO_DATA )
-        
-        //        printf("no data was read");
         incomingStr.clear();
-    
     else if ( myByte == OF_SERIAL_ERROR )
-        
         printf("an error occurred");
-    
     else
     {
         //        printf("%d", myByte);
@@ -323,84 +350,3 @@ void testApp::updateIncoming(){
     
 }
 
-    
-#pragma mark
-
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-
-
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
-//    for (int i = 0; i < guiPoints.size(); i++) {
-//        int _x = guiPoints[i].x;
-//        int _y = guiPoints[i].y;
-//        int radii = 10;
-//        // check in rect
-//        if(ofDist(mouseX, mouseY, _x, _y)<radii){
-//            cout << guiStr[i] << " : ";
-//            outgoingStr = stringToCharVector(guiStr[i], true);
-//            ofSetColor(255,255,255);
-//            ofCircle(_x, _y, radii);
-//            ofDrawBitmapString(guiStr[i], _x+15, _y);
-//            
-//        }
-//        
-//        if( i == 0 ){
-//            outgoingStr = stringToCharVector(guiStr[i], false);
-//            bInCommandMode = true;
-//        }
-//        
-//    }
-    
-    for(int i=0; i<pinCommands.size(); i++){
-        int pinX =pinCommands[i]->getLoc().x;
-        int pinY =pinCommands[i]->getLoc().y;
-        
-//        cout << pinX << x << "\r";
-//        cout << pinY << y << "\r";
-        if(ofDist(pinX, pinY, x, y) < 20){
-            ofSetColor(255, 0,0);
-            ofRect(pinX, pinY, 15, 15);
-            cout << "in range of " << i <<"\r";
-            highlightedPin = i;
-            
-            bShowSecondary  = true;
-            
-            pinCommands[highlightedPin]->reportParams();    
-            
-        }
-        
-    }
-
-    cout << bShowSecondary;
-    
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
-
-}
