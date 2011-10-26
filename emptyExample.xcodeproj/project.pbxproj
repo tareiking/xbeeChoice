@@ -30,7 +30,6 @@
 		F430A940144BCC94007B370B /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F430A93A144BCC94007B370B /* tinyxmlparser.cpp */; };
 		F430A941144BCC94007B370B /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F430A93C144BCC94007B370B /* ofxXmlSettings.cpp */; };
 		F477BB61144BECA9000BCDFD /* CommandLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F477BB60144BECA9000BCDFD /* CommandLoader.cpp */; };
-		F477BB75144C31B7000BCDFD /* ofxMSAInteractiveObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F477BB71144C31B7000BCDFD /* ofxMSAInteractiveObject.cpp */; };
 		F4929893144B753000F98635 /* Param.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4929892144B753000F98635 /* Param.cpp */; };
 /* End PBXBuildFile section */
 
@@ -96,13 +95,8 @@
 		F430A93D144BCC94007B370B /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		F477BB60144BECA9000BCDFD /* CommandLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandLoader.cpp; sourceTree = "<group>"; };
 		F477BB62144BECB6000BCDFD /* CommandLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandLoader.h; sourceTree = "<group>"; };
-		F477BB65144C31B7000BCDFD /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
-		F477BB6E144C31B7000BCDFD /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
-		F477BB6F144C31B7000BCDFD /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		F477BB71144C31B7000BCDFD /* ofxMSAInteractiveObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMSAInteractiveObject.cpp; sourceTree = "<group>"; };
-		F477BB72144C31B7000BCDFD /* ofxMSAInteractiveObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMSAInteractiveObject.h; sourceTree = "<group>"; };
 		F477BB76144C33A7000BCDFD /* MyTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTestObject.h; sourceTree = "<group>"; };
-		F48F269A145823D0005A41CB /* readme.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.markdown; sourceTree = "<group>"; };
+		F48F269A145823D0005A41CB /* readme.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = readme.markdown; path = src/readme.markdown; sourceTree = "<group>"; };
 		F4929890144B741B00F98635 /* Option.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Option.h; sourceTree = "<group>"; };
 		F4929891144B751500F98635 /* Param.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Param.h; sourceTree = "<group>"; };
 		F4929892144B753000F98635 /* Param.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Param.cpp; sourceTree = "<group>"; };
@@ -137,7 +131,6 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				F477BB64144C31B7000BCDFD /* ofxMSAInteractiveObject */,
 				F430A934144BCC94007B370B /* ofxXmlSettings */,
 			);
 			name = addons;
@@ -191,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
+				F48F269A145823D0005A41CB /* readme.markdown */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
@@ -204,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				F477BB76144C33A7000BCDFD /* MyTestObject.h */,
-				F48F269A145823D0005A41CB /* readme.markdown */,
 				F4DB4CA3144CB74D0042C558 /* function.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
@@ -254,26 +247,6 @@
 			children = (
 				F430A93C144BCC94007B370B /* ofxXmlSettings.cpp */,
 				F430A93D144BCC94007B370B /* ofxXmlSettings.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		F477BB64144C31B7000BCDFD /* ofxMSAInteractiveObject */ = {
-			isa = PBXGroup;
-			children = (
-				F477BB65144C31B7000BCDFD /* changelog.txt */,
-				F477BB6E144C31B7000BCDFD /* install.xml */,
-				F477BB6F144C31B7000BCDFD /* LICENSE.txt */,
-				F477BB70144C31B7000BCDFD /* src */,
-			);
-			path = ofxMSAInteractiveObject;
-			sourceTree = "<group>";
-		};
-		F477BB70144C31B7000BCDFD /* src */ = {
-			isa = PBXGroup;
-			children = (
-				F477BB71144C31B7000BCDFD /* ofxMSAInteractiveObject.cpp */,
-				F477BB72144C31B7000BCDFD /* ofxMSAInteractiveObject.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -371,7 +344,6 @@
 				F430A940144BCC94007B370B /* tinyxmlparser.cpp in Sources */,
 				F430A941144BCC94007B370B /* ofxXmlSettings.cpp in Sources */,
 				F477BB61144BECA9000BCDFD /* CommandLoader.cpp in Sources */,
-				F477BB75144C31B7000BCDFD /* ofxMSAInteractiveObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
