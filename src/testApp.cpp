@@ -28,9 +28,10 @@ ofColor lightGrey = ofColor(222, 222, 222);
 struct response{
     int option;
     int param;
-    string description;
+    string report;
 };
 
+vector<response> responses;
 
 void testApp::setup(){    
     ofSetFrameRate(30);
@@ -51,6 +52,10 @@ void testApp::setup(){
     specialCommands = loader.getSpecial();
     pinCommands = loader.getPins();
     
+    cout << pinCommands[0]->getName() << " set to: " << pinCommands[0]->getParamName(2) << "\r";
+    
+//    response *temp = new reponse;
+//    temp.option = pinCommands[0]->getName();
     cursorLoc = ofPoint(340, 40);
         
     highlightedPin = 99; // used to determine pin or special command
@@ -144,10 +149,10 @@ void testApp::draw(){
         incomingMsg += incomingStr[i];
      }
       
-    ofSetColor(255, 255, 255);
-    ofDrawBitmapString("FROM XBEE  ",2,-21);
-    ofDrawBitmapString(incomingMsg,10,10);        
-    ofPopMatrix();  
+//    ofSetColor(255, 255, 255);
+//    ofDrawBitmapString("FROM XBEE  ",2,-21);
+//    ofDrawBitmapString(incomingMsg,10,10);        
+//    ofPopMatrix();  
     
     ofDrawBitmapString(incomingMsg, ofGetWidth()/2, ofGetHeight()-200);
     incomingStr.clear();
@@ -262,12 +267,12 @@ void testApp::mousePressed(int x, int y, int button){
 
             if( highlightedPin != 99){
                 message += pinCommands[highlightedPin]->params[highlightedSecondary]->getCommand();
-//                message += ","; // for command stacking                
+                message += ","; // for command stacking                
                 goto outofloop;
             }
             else if ( highlightedPin == 99 ){
                 message += specialCommands[highlightedCommand]->params[highlightedSecondary]->getCommand();
-//                message += ","; // for command stacking                
+                message += ","; // for command stacking                
                 goto outofloop;
             }
             else {

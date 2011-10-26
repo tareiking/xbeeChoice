@@ -32,6 +32,7 @@ public:
     string getDescription();
     string getCommand();
     int getPin();
+ 
     virtual  ~Param();
 };
 

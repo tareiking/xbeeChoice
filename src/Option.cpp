@@ -169,5 +169,15 @@ string Option::getCommand(){
     return command;
 }
 
+string Option::getParamName(int _param){
+    // doesnt actually return the param name.. oops :)
+    if (params.size()>0){
+        string result;
+            result = params[_param]->getDescription();
+        return result;
+    }
+    else return "no param recorded";
+}
+
 Option::~Option(){
 }

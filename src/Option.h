@@ -49,6 +49,7 @@ public:
     string getName();
     string getDescription();
     string getCommand();
+    string getParamName(int _param);
     vector<Param *> params;
 
     
