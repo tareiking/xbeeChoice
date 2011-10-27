@@ -25,10 +25,15 @@ ofColor baseBlue = ofColor(81, 116, 146);
 ofColor darkGrey = ofColor(33,33,33);
 ofColor lightGrey = ofColor(222, 222, 222);
 
+//! Response is made for storing param values when receiving information from the xbee.
 struct response{
-    int option;
-    int param;
-    string report;
+    //! (int) option to be retrieved
+    int option;  
+    //! (int) param to be retrieved
+    int param;   
+    //! (string) details of the parameter name, description and command    
+    string report;  
+
 };
 
 vector<response> responses;
@@ -128,21 +133,13 @@ void testApp::draw(){
     
     // draw message content
     ofPushMatrix();
-        ofTranslate(30, ofGetHeight()-60);    
-        if (message == "AT")
-            ofSetColor(255, 179, 179);
-        else
-            ofSetColor(162, 171, 165);
+        ofTranslate(30, ofGetHeight()-120);    
+        ofSetColor(255, 255, 255);            
         ofRect(0, -20, 450, 45);
-        ofSetColor(13, 13, 13);
         ofDrawBitmapString("MESSAGE TO SEND  ",2,-21);
+        ofSetColor(0, 0, 0);    
         ofDrawBitmapString(message,10,10);        
     ofPopMatrix();    
-    
-
-    
-    
-
     
     for (int i = 0; i < incomingStr.size(); i++) {
         printf("%c", incomingStr[i]);

@@ -1,8 +1,8 @@
-// Param.h
+/// Params are valid arguments to augment options when sending to xbee
 //
 // Tarei King 2011
-// Loads the sub-option level named Param's from XML 
-// converts to objects to use in memory
+/// Loads the sub-option level named Param's from XML 
+/// converts to objects to use in memory
 
 
 #ifndef emptyExample_Param_h

@@ -1,0 +1,165 @@
+\hypertarget{classtest_app}{
+\section{testApp Class Reference}
+\label{classtest_app}\index{testApp@{testApp}}
+}
+
+
+XBEE CONFIGURATOR: sends and receives AT commands for xbee config.  
+
+
+
+
+{\ttfamily \#include $<$testApp.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtest_app_ad431db15b6150b965cd52bcba8e16e11}{
+void {\bfseries setup} ()}
+\label{classtest_app_ad431db15b6150b965cd52bcba8e16e11}
+
+\item 
+\hypertarget{classtest_app_afb39d201aec71a295b7609876bf7d0c6}{
+void {\bfseries update} ()}
+\label{classtest_app_afb39d201aec71a295b7609876bf7d0c6}
+
+\item 
+\hypertarget{classtest_app_af869cba67b1dab8481f8d0e216d59dcd}{
+void {\bfseries draw} ()}
+\label{classtest_app_af869cba67b1dab8481f8d0e216d59dcd}
+
+\item 
+\hypertarget{classtest_app_a904d147c7e532cb92656d5dd4895cd26}{
+void {\bfseries keyPressed} (int key)}
+\label{classtest_app_a904d147c7e532cb92656d5dd4895cd26}
+
+\item 
+\hypertarget{classtest_app_a1116a10088e4932f6d482efe723cd45e}{
+void {\bfseries keyReleased} (int key)}
+\label{classtest_app_a1116a10088e4932f6d482efe723cd45e}
+
+\item 
+\hypertarget{classtest_app_a33541b19eff9f8285b2487bfc146d58b}{
+void {\bfseries mouseMoved} (int x, int y)}
+\label{classtest_app_a33541b19eff9f8285b2487bfc146d58b}
+
+\item 
+\hypertarget{classtest_app_a075bcc2be16fd8f3eaa9162fb40a0a1f}{
+void {\bfseries mouseDragged} (int x, int y, int button)}
+\label{classtest_app_a075bcc2be16fd8f3eaa9162fb40a0a1f}
+
+\item 
+\hypertarget{classtest_app_a3f200702ce91859cac2872a39302679d}{
+void {\bfseries mousePressed} (int x, int y, int button)}
+\label{classtest_app_a3f200702ce91859cac2872a39302679d}
+
+\item 
+\hypertarget{classtest_app_aa3680ffc782b1e5c451289817f20c9c6}{
+void {\bfseries mouseReleased} (int x, int y, int button)}
+\label{classtest_app_aa3680ffc782b1e5c451289817f20c9c6}
+
+\item 
+\hypertarget{classtest_app_a428b7df9c64352d6e7cb234fc297e6c9}{
+void {\bfseries windowResized} (int w, int h)}
+\label{classtest_app_a428b7df9c64352d6e7cb234fc297e6c9}
+
+\item 
+\hypertarget{classtest_app_af15e9e9064fe5ccbe6c82cc401ae9e09}{
+void {\bfseries dragEvent} (ofDragInfo dragInfo)}
+\label{classtest_app_af15e9e9064fe5ccbe6c82cc401ae9e09}
+
+\item 
+\hypertarget{classtest_app_a66dbc8c5c2d4e20febebe9fd42b8c851}{
+void {\bfseries gotMessage} (ofMessage msg)}
+\label{classtest_app_a66dbc8c5c2d4e20febebe9fd42b8c851}
+
+\item 
+\hypertarget{classtest_app_a3faac502b02b61d213ac09353caf096d}{
+vector$<$ char $>$ \hyperlink{classtest_app_a3faac502b02b61d213ac09353caf096d}{stringToCharVector} (string \_\-incoming, bool \_\-addCarriageReturn)}
+\label{classtest_app_a3faac502b02b61d213ac09353caf096d}
+
+\begin{DoxyCompactList}\small\item\em Converts a string object to a vector of type char. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_ab5f01f9976337fe054bc8f57bb9d17c3}{
+void \hyperlink{classtest_app_ab5f01f9976337fe054bc8f57bb9d17c3}{updateIncoming} ()}
+\label{classtest_app_ab5f01f9976337fe054bc8f57bb9d17c3}
+
+\begin{DoxyCompactList}\small\item\em Converts messages from xbee to  variable. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_ac73b67e15f6823363c0840e591c11935}{
+void \hyperlink{classtest_app_ac73b67e15f6823363c0840e591c11935}{updateOutgoing} ()}
+\label{classtest_app_ac73b67e15f6823363c0840e591c11935}
+
+\begin{DoxyCompactList}\small\item\em Sends  to xbee. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a0cd8ec655fbb6e4d89ad57554c80f75a}{
+bool \hyperlink{classtest_app_a0cd8ec655fbb6e4d89ad57554c80f75a}{mouseInRect} (int x, int y, int width, int height)}
+\label{classtest_app_a0cd8ec655fbb6e4d89ad57554c80f75a}
+
+\begin{DoxyCompactList}\small\item\em Checks mouse location against rect(ish) and returns true if inside. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtest_app_acf06dc19cef5db8e4fcc0e689764b7a1}{
+vector$<$ ofPoint $>$ \hyperlink{classtest_app_acf06dc19cef5db8e4fcc0e689764b7a1}{guiPoints}}
+\label{classtest_app_acf06dc19cef5db8e4fcc0e689764b7a1}
+
+\begin{DoxyCompactList}\small\item\em vector of ofPoints for checking against mouseInrect and drawing gui rectangles \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a993eeb1e801ab73e68548b61c9657571}{
+vector$<$ char $>$ \hyperlink{classtest_app_a993eeb1e801ab73e68548b61c9657571}{outgoingStr}}
+\label{classtest_app_a993eeb1e801ab73e68548b61c9657571}
+
+\begin{DoxyCompactList}\small\item\em vector of chars for sending to xbee \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a10589879c0a6b1f903147555828e56c8}{
+vector$<$ char $>$ \hyperlink{classtest_app_a10589879c0a6b1f903147555828e56c8}{incomingStr}}
+\label{classtest_app_a10589879c0a6b1f903147555828e56c8}
+
+\begin{DoxyCompactList}\small\item\em vector of chars for returning from xbee \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a84f94cf6e5fdf7b0c613d1a697721e96}{
+\hyperlink{class_command_loader}{CommandLoader} \hyperlink{classtest_app_a84f94cf6e5fdf7b0c613d1a697721e96}{loader}}
+\label{classtest_app_a84f94cf6e5fdf7b0c613d1a697721e96}
+
+\begin{DoxyCompactList}\small\item\em loader. takes care of xml via commandLoader \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a8103ee9f54c2adda499bf5b19c3ffebc}{
+ofSerial {\bfseries serial}}
+\label{classtest_app_a8103ee9f54c2adda499bf5b19c3ffebc}
+
+\item 
+\hypertarget{classtest_app_af5275cd3950e2ce501f02a32815a8b7a}{
+ofImage {\bfseries bg}}
+\label{classtest_app_af5275cd3950e2ce501f02a32815a8b7a}
+
+\item 
+\hypertarget{classtest_app_a8f9bc3a319dd757c1b2c9ec3c54cbf11}{
+ofxXmlSettings {\bfseries xml}}
+\label{classtest_app_a8f9bc3a319dd757c1b2c9ec3c54cbf11}
+
+\item 
+\hypertarget{classtest_app_a3500bd9066da0482d7b4bd6399d0eda0}{
+vector$<$ \hyperlink{class_option}{Option} $\ast$ $>$ \hyperlink{classtest_app_a3500bd9066da0482d7b4bd6399d0eda0}{options}}
+\label{classtest_app_a3500bd9066da0482d7b4bd6399d0eda0}
+
+\begin{DoxyCompactList}\small\item\em contains all options returned from loader \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_ab684f35985efa1134ef552f690f00d33}{
+vector$<$ \hyperlink{class_option}{Option} $\ast$ $>$ {\bfseries testOpts}}
+\label{classtest_app_ab684f35985efa1134ef552f690f00d33}
+
+\item 
+\hypertarget{classtest_app_a0e96c4c9258b8cf5c981c95ecc147dfe}{
+vector$<$ \hyperlink{class_option}{Option} $\ast$ $>$ \hyperlink{classtest_app_a0e96c4c9258b8cf5c981c95ecc147dfe}{specialCommands}}
+\label{classtest_app_a0e96c4c9258b8cf5c981c95ecc147dfe}
+
+\begin{DoxyCompactList}\small\item\em contains all special (nonpin) commands from loader \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_aa1aa16a3cb0615961f94096a6be5c826}{
+vector$<$ \hyperlink{class_option}{Option} $\ast$ $>$ \hyperlink{classtest_app_aa1aa16a3cb0615961f94096a6be5c826}{pinCommands}}
+\label{classtest_app_aa1aa16a3cb0615961f94096a6be5c826}
+
+\begin{DoxyCompactList}\small\item\em contains all pin commands from loader \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+XBEE CONFIGURATOR: sends and receives AT commands for xbee config. 
+
+Loads xml of options-\/$>$parameters and then displays them as GUI items Press 'space' to enter command mode Then click options on screen, if they have multiple parameters these will be shown onscreen Press 'enter' to send the message string If something is missing, then you can 'roll your own' by manually typing onscreen 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/testApp.h\item 
+src/testApp.cpp\end{DoxyCompactItemize}

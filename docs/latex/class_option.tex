@@ -1,0 +1,140 @@
+\hypertarget{class_option}{
+\section{Option Class Reference}
+\label{class_option}\index{Option@{Option}}
+}
+
+
+Options valid for sending/retrieving from xbee.  
+
+
+
+
+{\ttfamily \#include $<$Option.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_option_aadd136054242c0d8e9b30d242f314de5}{
+{\bfseries Option} (ofPoint \_\-loc, int \_\-pin, string \_\-name, string \_\-description, string \_\-command)}
+\label{class_option_aadd136054242c0d8e9b30d242f314de5}
+
+\item 
+\hypertarget{class_option_aba3ebc23e5b578aaf4a1a33aafb62ba0}{
+{\bfseries Option} (ofPoint \_\-loc, string \_\-name, string \_\-description, string \_\-command)}
+\label{class_option_aba3ebc23e5b578aaf4a1a33aafb62ba0}
+
+\item 
+\hypertarget{class_option_abf07150989b73c874dbe1a27af76fcaa}{
+void {\bfseries setLoc} (ofPoint \&\_\-loc)}
+\label{class_option_abf07150989b73c874dbe1a27af76fcaa}
+
+\item 
+\hypertarget{class_option_abb82bb6cd8eab22050cbe0a3e0ff5c81}{
+void {\bfseries setPin} (int \_\-pin)}
+\label{class_option_abb82bb6cd8eab22050cbe0a3e0ff5c81}
+
+\item 
+\hypertarget{class_option_a9a20d624af04f15fe38c52e93d869d5c}{
+void {\bfseries setName} (string \_\-name)}
+\label{class_option_a9a20d624af04f15fe38c52e93d869d5c}
+
+\item 
+\hypertarget{class_option_a06c0e4cbc077ed7c2cb817d45ca1e390}{
+void {\bfseries setDescription} (string \_\-description)}
+\label{class_option_a06c0e4cbc077ed7c2cb817d45ca1e390}
+
+\item 
+\hypertarget{class_option_a2dc5822ffe4fb11daf1002debc0f06c7}{
+void {\bfseries addParam} (int \_\-type, string \_\-name, string \_\-description, string \_\-command)}
+\label{class_option_a2dc5822ffe4fb11daf1002debc0f06c7}
+
+\item 
+\hypertarget{class_option_aa5e17ea2c140e711c9bf4f497d231756}{
+void {\bfseries setCommand} (string \_\-command)}
+\label{class_option_aa5e17ea2c140e711c9bf4f497d231756}
+
+\item 
+\hypertarget{class_option_a2108ee24186ed8dd467d4a74c900e72c}{
+void {\bfseries draw} (bool selected)}
+\label{class_option_a2108ee24186ed8dd467d4a74c900e72c}
+
+\item 
+\hypertarget{class_option_a0561a896b9465b4aeea9d4c4d382d9b7}{
+void {\bfseries drawPin} (bool selected)}
+\label{class_option_a0561a896b9465b4aeea9d4c4d382d9b7}
+
+\item 
+\hypertarget{class_option_ae8b2141e4b48b00925cbdd71cd473478}{
+void {\bfseries report} ()}
+\label{class_option_ae8b2141e4b48b00925cbdd71cd473478}
+
+\item 
+\hypertarget{class_option_a23a95cc6603d1091bb29769affbe54a3}{
+void {\bfseries reportParams} ()}
+\label{class_option_a23a95cc6603d1091bb29769affbe54a3}
+
+\item 
+\hypertarget{class_option_a2823ad20525baba0da0a4e13a28c80c7}{
+void {\bfseries drawParams} (int x, int selected)}
+\label{class_option_a2823ad20525baba0da0a4e13a28c80c7}
+
+\item 
+\hypertarget{class_option_a7d825d8dcf31121cbb63af15127cd82c}{
+ofPoint {\bfseries getLoc} ()}
+\label{class_option_a7d825d8dcf31121cbb63af15127cd82c}
+
+\item 
+\hypertarget{class_option_ad624979754236046c1cfe892718eb20f}{
+vector$<$ \hyperlink{class_param}{Param} $\ast$ $>$ {\bfseries getParams} ()}
+\label{class_option_ad624979754236046c1cfe892718eb20f}
+
+\item 
+\hypertarget{class_option_acd50a0654db53e304c9f9e366a9b6496}{
+vector$<$ ofPoint $>$ {\bfseries getParamsLoc} ()}
+\label{class_option_acd50a0654db53e304c9f9e366a9b6496}
+
+\item 
+\hypertarget{class_option_a400e5a1dd3d71c3d4df1d6627cb6cd8c}{
+int {\bfseries getPin} ()}
+\label{class_option_a400e5a1dd3d71c3d4df1d6627cb6cd8c}
+
+\item 
+\hypertarget{class_option_aa14e72aeb556ba0920626c7ad2af411f}{
+string {\bfseries getName} ()}
+\label{class_option_aa14e72aeb556ba0920626c7ad2af411f}
+
+\item 
+\hypertarget{class_option_a071d327cd2c6e5770d5073bba40aeb27}{
+string {\bfseries getDescription} ()}
+\label{class_option_a071d327cd2c6e5770d5073bba40aeb27}
+
+\item 
+\hypertarget{class_option_a9ecd3443e8ede7ab1e1cc9680a88a58c}{
+string {\bfseries getCommand} ()}
+\label{class_option_a9ecd3443e8ede7ab1e1cc9680a88a58c}
+
+\item 
+\hypertarget{class_option_a4fe3873f9093b1e13d2812f970f56971}{
+string {\bfseries getParamName} (int \_\-param)}
+\label{class_option_a4fe3873f9093b1e13d2812f970f56971}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_option_aa3cca11fe8471ace6b66e224c88783b4}{
+vector$<$ \hyperlink{class_param}{Param} $\ast$ $>$ {\bfseries params}}
+\label{class_option_aa3cca11fe8471ace6b66e224c88783b4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Options valid for sending/retrieving from xbee. 
+
+Used to create objects of option. These are used to load x.bee primary pin / command options 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/Option.h\item 
+src/Option.cpp\end{DoxyCompactItemize}

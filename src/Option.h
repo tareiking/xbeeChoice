@@ -10,11 +10,11 @@
 
 #include <iostream>
 #include "ofMain.h"
-// Option.h
+/// Options valid for sending/retrieving from xbee
 //
 // Tarei King 2011
-// used to create objects of option. These are used to load x.bee 
-// primary pin / command options
+/// Used to create objects of option. These are used to load x.bee 
+/// primary pin / command options
 
 #include "Param.h"
 

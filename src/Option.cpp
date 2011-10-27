@@ -86,8 +86,6 @@ void Option::drawParams(int x, int selected){
     int offset = 30;
     ofSetRectMode(OF_RECTMODE_CENTER);
     for (int i=0; i<params.size(); i++){
-        ofSetColor(232, 230, 237);
-        
         ofNoFill();
         ofRect(x, offset, 15, 15);
         if(i == selected){
