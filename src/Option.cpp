@@ -10,6 +10,7 @@
 
 Option::Option(){
     name = "default name";
+    setup();
 }
 
 Option::Option(ofPoint _loc, int _pin, string _name, string _description, string _command){
@@ -18,6 +19,7 @@ Option::Option(ofPoint _loc, int _pin, string _name, string _description, string
     name = _name;
     description = _description;
     command = _command;
+    setup();
 }
 
 Option::Option(ofPoint _loc, string _name,  string _description, string _command){
@@ -26,7 +28,12 @@ Option::Option(ofPoint _loc, string _name,  string _description, string _command
        description = _description;
        command = _command;   
        pin = 999;
+       setup();
+}
 
+void Option::setup(){
+    font.loadFont("font.ttf", 10);
+    largeFont.loadFont("font.ttf", 16);
 }
 
 // add parameter to params vector for later 
@@ -41,12 +48,13 @@ void Option::draw(bool selected){
     int width = 15;
     ofNoFill();
     ofRect(loc.x, loc.y, width, width);
-    ofDrawBitmapString(name, loc.x + 20, loc.y + 5);
+//    ofDrawBitmapString(name, loc.x + 20, loc.y + 5);
+    font.drawString(name, loc.x + 20,  loc.y + 5);
     ofFill();
     
     if (selected){
         ofSetColor(210,0,0);
-        ofRect(loc.x, loc.y, width-3, width-3);
+        ofRect(loc.x, loc.y, width-3, width-3);        
     }
     ofSetRectMode(OF_RECTMODE_CORNER);
 
@@ -56,13 +64,14 @@ void Option::drawPin(bool selected){
     
     ofSetRectMode(OF_RECTMODE_CENTER);
     int width = 15;
-      
+    
+    ofRect(loc.x, loc.y, width, width);
+    font.drawString(name, loc.x + 40,  loc.y + 5);
 
-        ofRect(loc.x, loc.y, width, width);
-        ofDrawBitmapString(name, loc.x + 40, loc.y + 5);
-        ofDrawBitmapString(ofToString(pin), loc.x+15, loc.y+5);
+//    ofDrawBitmapString(name, loc.x + 40, loc.y + 5);
+//    ofDrawBitmapString(ofToString(pin), loc.x+15, loc.y+5);
 
-        ofSetRectMode(OF_RECTMODE_CORNER);
+    ofSetRectMode(OF_RECTMODE_CORNER);
 }
 
 void Option::report(){
@@ -96,14 +105,16 @@ void Option::drawParams(int x, int selected){
             ofNoFill();
         }
         ofSetColor(232, 230, 237);
-        ofDrawBitmapString(name, loc.x + 20, loc.y + 5);
+//        ofDrawBitmapString(name, loc.x + 20, loc.y + 5);
+        font.drawString(name, loc.x+20, loc.y+5);
         ofFill();
 
         string msg = "[";
         msg += params[i]->getName();
         msg += "] ";
         msg += params[i]->getDescription();
-        ofDrawBitmapString(msg, x+20, offset);
+//        ofDrawBitmapString(msg, x+20, offset);
+        font.drawString(msg, x+20, offset);
         
         params[i]->setLoc(x, offset);
         offset += 30;

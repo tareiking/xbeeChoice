@@ -6,18 +6,22 @@
 
 vector<string> guiStr;
 bool bInCommandMode;
-string incomingMsg;
+
 int selectionOffsetX;
 int selectionOffsetY;
 bool bSecondOptions;
-string message;
+string message, incomingMsg, alertMessage;
 int highlightedCommand;
 int highlightedPin;
 int highlightedSecondary;
 
-bool bShowSecondary;
+bool bShowSecondary, bDrawIncoming, bAlert;
 vector<ofPoint> secondaryLoc;
 char myByte = 0;
+
+int timer, originalTimer;
+bool bConnected;
+
 
 ofPoint(cursorLoc);
 
@@ -52,8 +56,10 @@ void testApp::setup(){
         printf("Serial - 0, 9600 initiated. \r");
         printf("PRESS SPACE TO ENTER COMMAND MODE...... \r");        
         printf("==================================-------- \r");                
-    }; 
-        
+    }
+    else {
+        printf("error connecting to serial port [0]\r");  
+    }
     specialCommands = loader.getSpecial();
     pinCommands = loader.getPins();
     
@@ -64,19 +70,42 @@ void testApp::setup(){
     cursorLoc = ofPoint(340, 40);
         
     highlightedPin = 99; // used to determine pin or special command
-    bShowSecondary = false;
+    bShowSecondary = bConnected = false;
     
     serial.flush();    
 
     message = "AT";
     
+    font.loadFont("font.ttf", 10);
+    largeFont.loadFont("font.ttf", 16);
+    timer = originalTimer = ofGetSeconds();
     
+    bAlert = false;
 }
-
+int timeSinceLastSend;
 
 void testApp::update(){
+    // check timer functions  
+//    if(ofGetElapsedTimef()-timer<3){
+//        bConnected = false;
+//    }
+//    else {
+//        bConnected = true;
+//    }
+
     updateOutgoing(); // needs to move into OOP class and take serial*
     updateIncoming(); // needs to move into OOP class and take serial*
+
+    if (incomingMsg.size()>0)
+        bDrawIncoming = true;
+    else
+        bDrawIncoming = false;
+
+    
+
+
+
+
     
 } 
 
@@ -90,6 +119,7 @@ void testApp::draw(){
     
    // draw special commands
     ofPushMatrix();
+    largeFont.drawString("Special Commands", 0, 20);
     for (int i = 0; i < specialCommands.size(); i++) {
         if(i == highlightedCommand)
             specialCommands[i]->draw(true);
@@ -100,8 +130,9 @@ void testApp::draw(){
     ofPopMatrix();
     
     
-    // draw pseudo xbee
+    // draw PIN commands
     ofPushMatrix();
+    largeFont.drawString("PIN Commands",250, 20);
     for (int i = 0; i < pinCommands.size(); i++) {
         if(ofDist(cursorLoc.x, cursorLoc.y, pinCommands[i]->getLoc().x, pinCommands[i]->getLoc().y)< 10){
             highlightedPin = i;
@@ -133,27 +164,49 @@ void testApp::draw(){
     
     // draw message content
     ofPushMatrix();
-        ofTranslate(30, ofGetHeight()-120);    
+        ofTranslate(30, ofGetHeight()-80);    
         ofSetColor(255, 255, 255);            
         ofRect(0, -20, 450, 45);
-        ofDrawBitmapString("MESSAGE TO SEND  ",2,-21);
-        ofSetColor(0, 0, 0);    
-        ofDrawBitmapString(message,10,10);        
+        font.drawString("MESSAGE TO SEND (or roll your own)", 2, -30);
+
+        ofSetColor(125, 125, 125);       
+        largeFont.drawString(message, 10, 10);
     ofPopMatrix();    
     
     for (int i = 0; i < incomingStr.size(); i++) {
         printf("%c", incomingStr[i]);
         incomingMsg += incomingStr[i];
      }
-      
-//    ofSetColor(255, 255, 255);
-//    ofDrawBitmapString("FROM XBEE  ",2,-21);
-//    ofDrawBitmapString(incomingMsg,10,10);        
-//    ofPopMatrix();  
     
-    ofDrawBitmapString(incomingMsg, ofGetWidth()/2, ofGetHeight()-200);
-    incomingStr.clear();
+    // draw alert message
+    ofPushMatrix();
+    ofTranslate(ofGetWidth()/2-400, ofGetHeight()/2+40);
+
+    if(bAlert){
+//        ofSetColor(whiteColor);
+        alertMessage = "IN COMMAND MODE: Select command with MOUSE";
+        largeFont.drawString(alertMessage, 0, 0);
+        largeFont.drawString("Press ENTER to send to Xbee", 0, 24);
+    }
+    else{
+        alertMessage = "PRESS SPACE TO ENTER COMMAND MODE";
+        largeFont.drawString(alertMessage, 0, 0);
+    }
+    ofPopMatrix();
+        
     
+    // draw incoming message
+    ofPushMatrix();
+        ofTranslate(ofGetWidth()/2+40, ofGetHeight()-80);
+        ofSetColor(255, 255, 255);            
+        ofRect(0, -20, 375, 45);    
+        font.drawString("MESSAGE RECEIVED", 0, -30);
+        //font.drawString(incomingMsg, ofGetWidth()/2, ofGetHeight()-200);
+
+        ofSetColor(125, 125, 125);       
+        largeFont.drawString(incomingMsg, 10, 10);
+        incomingStr.clear();
+    ofPopMatrix();
 }
 
 void testApp::keyPressed(int key){}
@@ -165,48 +218,30 @@ void testApp::keyReleased(int key){
         printf("Entering Command Mode:  ");
         unsigned char buffer[3];
         buffer[0] = buffer[1] = buffer[2] = '+';
-        serial.writeBytes(buffer, 3);             
+        serial.writeBytes(buffer, 3);        
+        timer = ofGetElapsedTimef();
+        bAlert = true;
     }
     
     else if(key == OF_KEY_RETURN){
         cout << "\rMessage sent: " << message << "\r";
+        
         vector<char> chars = stringToCharVector(message, true);
         unsigned char buffer[chars.size()];
         for (int i =0; i<chars.size(); i++){
             buffer[i]=chars[i];
         }
-//        serial.writeBytes(buffer, chars.size());
         outgoingStr = chars;
         message = "AT";
-
+//        timer = ofGetSeconds();
     }
-    
-    else if(key == OF_KEY_UP){
-//        cursorLoc.y -= 30;        
-//        if(cursorLoc.y < 40)
-//            cursorLoc.y = 40;
-    }
-    
-   else if(key == OF_KEY_DOWN){        
-//        cursorLoc.y += 30;
-//        if(cursorLoc.y > 350)
-//            cursorLoc.y = 350;
-    }
-    
-  else  if(key == OF_KEY_LEFT){
-//        cursorLoc.x = 57;
-    }
-    
-  else  if(key == OF_KEY_RIGHT){
-//        cursorLoc.x = 340;
-    }    
     
   else  if(key == 127){ // delete
-        message = "AT";
+      message = "AT";
     }
     
-    else 
-        message += key; // manual override
+  else 
+      message += key; // manual override
 }
 
 void testApp::mouseMoved(int x, int y ){}
@@ -216,27 +251,27 @@ void testApp::mouseDragged(int x, int y, int button){}
 void testApp::mousePressed(int x, int y, int button){
     
     ofPoint mousePosition = ofPoint(x, y);
-    cout << "mouse x: " << x << " y: " << y;
+//    cout << "mouse x: " << x << " y: " << y;
     
     for(int i=0; i<pinCommands.size(); i++){
         for(int j=0; j<specialCommands.size(); j++){
             
             
             if ( ofDist(pinCommands[i]->getLoc().x,  pinCommands[i]->getLoc().y, mousePosition.x, mousePosition.y)<10){
-                ofLog(OF_LOG_ERROR,"mouse clicked in pin command \r");   
+//                ofLog(OF_LOG_ERROR,"mouse clicked in pin command \r");   
                 highlightedPin = i;
                 highlightedCommand = 99;
                 if(pinCommands[i]->getParams().size() > 0)
                     bShowSecondary = true;
                 else
                     bShowSecondary = false;
-                message += pinCommands[i]->getCommand();
+                    message += pinCommands[i]->getCommand();
                 goto outofloop;
             }
             
             
             if ( ofDist(specialCommands[j]->getLoc().x,  specialCommands[j]->getLoc().y, mousePosition.x, mousePosition.y)<10){
-                ofLog(OF_LOG_ERROR,"close to special command \r");  
+//                ofLog(OF_LOG_ERROR,"close to special command \r");  
                 highlightedCommand = j;
                 highlightedPin = 99;
                 if(specialCommands[j]->getParams().size() > 0)
@@ -255,7 +290,7 @@ void testApp::mousePressed(int x, int y, int button){
     
     for(int k=0; k<secondaryLoc.size(); k++){
 
-        ofLog(OF_LOG_ERROR, "mouse in secondary options"); // FIXME:  Might be where the OutOfRange exceptions come from for the secondaryLoc errors??
+//        ofLog(OF_LOG_ERROR, "mouse in secondary options"); // FIXME:  Might be where the OutOfRange exceptions come from for the secondaryLoc errors??
 //        cout << " pinLoc x: " << pinCommands[i]->getLoc().x << " y: " <<pinCommands[i]->getLoc().y << "\r";        
         
         mousePosition.x = 600;

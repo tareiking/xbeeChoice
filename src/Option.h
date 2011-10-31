@@ -24,12 +24,14 @@ class Option {
     string name;
     string description;
     string command;
-
+    ofTrueTypeFont font;
+    ofTrueTypeFont largeFont;
     
 public:
     Option();    
     Option(ofPoint _loc, int _pin, string _name,  string _description, string _command);
     Option(ofPoint _loc, string _name,  string _description, string _command);    
+    void setup();
     void setLoc(ofPoint &_loc);
     void setPin(int _pin);
     void setName(string _name);

@@ -12,6 +12,7 @@
 #include "Param.h"
 #include "ofxXmlSettings.h"
 #include "CommandLoader.h"
+#include "ofUtils.h"
 
 class testApp : public ofBaseApp{
 
@@ -50,5 +51,7 @@ class testApp : public ofBaseApp{
     vector<Option*> testOpts;
     vector<Option*> specialCommands;    ///< contains all special (nonpin) commands from loader
     vector<Option*> pinCommands;        ///< contains all pin commands from loader
-    
+
+    ofTrueTypeFont font;
+    ofTrueTypeFont largeFont;
 };
