@@ -85,13 +85,6 @@ void testApp::setup(){
 int timeSinceLastSend;
 
 void testApp::update(){
-    // check timer functions  
-//    if(ofGetElapsedTimef()-timer<3){
-//        bConnected = false;
-//    }
-//    else {
-//        bConnected = true;
-//    }
 
     updateOutgoing(); // needs to move into OOP class and take serial*
     updateIncoming(); // needs to move into OOP class and take serial*
@@ -100,13 +93,6 @@ void testApp::update(){
         bDrawIncoming = true;
     else
         bDrawIncoming = false;
-
-    
-
-
-
-
-    
 } 
 
 
@@ -117,7 +103,7 @@ void testApp::draw(){
     ofRect(0, 0, ofGetWidth(), ofGetHeight());
     ofSetColor(lightGrey);
     
-   // draw special commands
+    // draw special commands
     ofPushMatrix();
     largeFont.drawString("Special Commands", 0, 20);
     for (int i = 0; i < specialCommands.size(); i++) {
@@ -145,18 +131,23 @@ void testApp::draw(){
     }
     ofPopMatrix();
     
+
     // draw secondary options
     if(bShowSecondary){
+        ofPushMatrix();
+        largeFont.drawString("Options", 450, 20);
+        ofPopMatrix();
+        
         // check which pin is selected
         if(highlightedPin != 99 && pinCommands[highlightedPin]->getParams().size()>0){
             secondaryLoc.empty();
             
-            pinCommands[highlightedPin]->drawParams(600, highlightedSecondary);
+            pinCommands[highlightedPin]->drawParams(460, highlightedSecondary);
             secondaryLoc= pinCommands[highlightedPin]->getParamsLoc();
         }
         else{
             secondaryLoc.empty();
-            specialCommands[highlightedCommand]->drawParams(600, highlightedSecondary);      
+            specialCommands[highlightedCommand]->drawParams(460, highlightedSecondary);      
             secondaryLoc= specialCommands[highlightedCommand]->getParamsLoc();
         }
 
@@ -173,10 +164,14 @@ void testApp::draw(){
         largeFont.drawString(message, 10, 10);
     ofPopMatrix();    
     
+    if(incomingMsg.length() > 60)
+        incomingMsg = "";
+    
     for (int i = 0; i < incomingStr.size(); i++) {
         printf("%c", incomingStr[i]);
         incomingMsg += incomingStr[i];
      }
+    
     
     // draw alert message
     ofPushMatrix();
@@ -290,21 +285,21 @@ void testApp::mousePressed(int x, int y, int button){
     
     for(int k=0; k<secondaryLoc.size(); k++){
 
-//        ofLog(OF_LOG_ERROR, "mouse in secondary options"); // FIXME:  Might be where the OutOfRange exceptions come from for the secondaryLoc errors??
+        ofLog(OF_LOG_ERROR, "mouse in secondary options"); // FIXME:  Might be where the OutOfRange exceptions come from for the secondaryLoc errors??
 //        cout << " pinLoc x: " << pinCommands[i]->getLoc().x << " y: " <<pinCommands[i]->getLoc().y << "\r";        
         
-        mousePosition.x = 600;
+        mousePosition.x = 460;
         if ( ofDist(secondaryLoc[k].x,  secondaryLoc[k].y, mousePosition.x, mousePosition.y)<10){
             highlightedSecondary = k;
 
             if( highlightedPin != 99){
                 message += pinCommands[highlightedPin]->params[highlightedSecondary]->getCommand();
-                message += ","; // for command stacking                
+//                message += ","; // for command stacking                
                 goto outofloop;
             }
             else if ( highlightedPin == 99 ){
                 message += specialCommands[highlightedCommand]->params[highlightedSecondary]->getCommand();
-                message += ","; // for command stacking                
+//                message += ","; // for command stacking                
                 goto outofloop;
             }
             else {

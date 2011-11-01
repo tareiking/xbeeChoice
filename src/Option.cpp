@@ -68,9 +68,6 @@ void Option::drawPin(bool selected){
     ofRect(loc.x, loc.y, width, width);
     font.drawString(name, loc.x + 40,  loc.y + 5);
 
-//    ofDrawBitmapString(name, loc.x + 40, loc.y + 5);
-//    ofDrawBitmapString(ofToString(pin), loc.x+15, loc.y+5);
-
     ofSetRectMode(OF_RECTMODE_CORNER);
 }
 
@@ -92,7 +89,7 @@ void Option::reportParams(){
 }
 
 void Option::drawParams(int x, int selected){
-    int offset = 30;
+    int offset = 50;
     ofSetRectMode(OF_RECTMODE_CENTER);
     for (int i=0; i<params.size(); i++){
         ofNoFill();
@@ -118,7 +115,6 @@ void Option::drawParams(int x, int selected){
         
         params[i]->setLoc(x, offset);
         offset += 30;
-    
     }
     ofSetRectMode(OF_RECTMODE_CORNER);    
 }
