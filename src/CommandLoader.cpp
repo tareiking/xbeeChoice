@@ -9,6 +9,8 @@
 #include "CommandLoader.h"
 
 CommandLoader::CommandLoader(){
+    ofSetDataPathRoot("../Resources/");
+    
     if (xml.loadFile("x.bee"))
         cout << ".bee file loaded" << "\r";
     else 

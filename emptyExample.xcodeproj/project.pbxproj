@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 44;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,9 @@
 		F430A93F144BCC94007B370B /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F430A939144BCC94007B370B /* tinyxmlerror.cpp */; };
 		F430A940144BCC94007B370B /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F430A93A144BCC94007B370B /* tinyxmlparser.cpp */; };
 		F430A941144BCC94007B370B /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F430A93C144BCC94007B370B /* ofxXmlSettings.cpp */; };
+		F434E7E61460D0FE00744806 /* font.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = F434E7E21460D0DC00744806 /* font.ttf */; };
+		F434E7E71460D0FE00744806 /* x.bee in CopyFiles */ = {isa = PBXBuildFile; fileRef = F434E7E31460D0DC00744806 /* x.bee */; };
+		F434E7E81460D0FE00744806 /* xbee.icns in CopyFiles */ = {isa = PBXBuildFile; fileRef = F434E7E41460D0DC00744806 /* xbee.icns */; };
 		F477BB61144BECA9000BCDFD /* CommandLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F477BB60144BECA9000BCDFD /* CommandLoader.cpp */; };
 		F4929893144B753000F98635 /* Param.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4929892144B753000F98635 /* Param.cpp */; };
 /* End PBXBuildFile section */
@@ -58,6 +61,18 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F413383B1460C9910098C565 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				F434E7E61460D0FE00744806 /* font.ttf in CopyFiles */,
+				F434E7E71460D0FE00744806 /* x.bee in CopyFiles */,
+				F434E7E81460D0FE00744806 /* xbee.icns in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,9 +108,14 @@
 		F430A93A144BCC94007B370B /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		F430A93C144BCC94007B370B /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		F430A93D144BCC94007B370B /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
+		F434E7E11460D0DC00744806 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F434E7E21460D0DC00744806 /* font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.ttf; sourceTree = "<group>"; };
+		F434E7E31460D0DC00744806 /* x.bee */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = x.bee; sourceTree = "<group>"; };
+		F434E7E41460D0DC00744806 /* xbee.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = xbee.icns; sourceTree = "<group>"; };
+		F434E7E51460D0ED00744806 /* xbee.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = xbee.icns; sourceTree = "<group>"; };
 		F477BB60144BECA9000BCDFD /* CommandLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandLoader.cpp; sourceTree = "<group>"; };
 		F477BB62144BECB6000BCDFD /* CommandLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandLoader.h; sourceTree = "<group>"; };
-		F48F269A145823D0005A41CB /* readme.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = readme.markdown; path = src/readme.markdown; sourceTree = "<group>"; };
+		F48F269A145823D0005A41CB /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = readme.md; path = src/readme.md; sourceTree = "<group>"; };
 		F4929890144B741B00F98635 /* Option.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Option.h; sourceTree = "<group>"; };
 		F4929891144B751500F98635 /* Param.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Param.h; sourceTree = "<group>"; };
 		F4929892144B753000F98635 /* Param.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Param.cpp; sourceTree = "<group>"; };
@@ -181,9 +201,11 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				F434E7E51460D0ED00744806 /* xbee.icns */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
-				F48F269A145823D0005A41CB /* readme.markdown */,
+				F48F269A145823D0005A41CB /* readme.md */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
+				F434E7E01460D0DC00744806 /* data */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
@@ -247,6 +269,18 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		F434E7E01460D0DC00744806 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				F434E7E11460D0DC00744806 /* .gitignore */,
+				F434E7E21460D0DC00744806 /* font.ttf */,
+				F434E7E31460D0DC00744806 /* x.bee */,
+				F434E7E41460D0DC00744806 /* xbee.icns */,
+			);
+			name = data;
+			path = bin/data;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -258,6 +292,7 @@
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
 				E4B6FFFD0C3F9AB9008CF71C /* ShellScript */,
 				E4C2427710CC5ABF004149E2 /* CopyFiles */,
+				F413383B1460C9910098C565 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -380,6 +415,7 @@
 					"-lpthread",
 				);
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = ../../../libs/cairo/include;
 			};
 			name = Debug;
 		};
@@ -411,6 +447,7 @@
 					"-lpthread",
 				);
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = ../../../libs/cairo/include;
 			};
 			name = Release;
 		};
@@ -498,6 +535,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

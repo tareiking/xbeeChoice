@@ -48,7 +48,7 @@ void testApp::setup(){
     ofEnableSmoothing();
     ofEnableAlphaBlending();
 
-    // setup serial and check devices
+    // setup serial and check devices    
     serial.listDevices();
 
     if( serial.setup(0, 9600) ){ // hard coded, FIXME
@@ -60,13 +60,12 @@ void testApp::setup(){
     else {
         printf("error connecting to serial port [0]\r");  
     }
+    
+    ofSetDataPathRoot("../Resources/");
+    
+    
     specialCommands = loader.getSpecial();
     pinCommands = loader.getPins();
-    
-    cout << pinCommands[0]->getName() << " set to: " << pinCommands[0]->getParamName(2) << "\r";
-    
-//    response *temp = new reponse;
-//    temp.option = pinCommands[0]->getName();
     cursorLoc = ofPoint(340, 40);
         
     highlightedPin = 99; // used to determine pin or special command

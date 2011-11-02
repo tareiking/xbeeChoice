@@ -1,0 +1,507 @@
+<special>	
+	<command>
+		<name>Command Mode Time</name>
+		<ATCommand>CT</ATCommand>
+		<description>Set/Read the period of inactivity</description>
+		<parameter>
+			<name>0</name>
+			<description>enable</description>
+			<command>0</command>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>disable</description>
+			<command>1</command>
+		</parameter>		
+		<location>
+			<x>10</x>
+			<y>50</y>
+		</location>
+	</command>
+		
+	<command>
+		<name>Exit Command Mode</name>
+		<ATCommand>CN</ATCommand>
+		<description>Explicitly exit the module from AT Command mode</description>
+		<location>
+			<x>10</x>
+			<y>80</y>
+		</location>		
+	</command>
+
+	<command>
+		<name>Software Reset</name>
+		<ATCommand>FR</ATCommand>
+		<description>Responds immediately with an OK then performs a hard reset ~100ms later.</description>
+		<location>
+			<x>10</x>
+			<y>110</y>
+		</location>
+	</command>
+
+	<command>
+		<name>I/O output enable</name>
+		<ATCommand>IU</ATCommand>
+		<description>Disables/Enables I/O data received to be sent out UART. The data is sent using an API frame regardless of the current AP parameter value.</description>
+		<parameter>
+				<name>0</name>
+				<description>Disabled</description>
+		</parameter>
+		<parameter>
+				<name>1</name>
+				<description>Enabled</description>
+		</parameter>
+		<location>
+				<x>10</x>
+				<y>140</y>
+		</location>
+	</command>
+
+	<command>
+		<name>Firmware Version</name>
+		<ATCommand>FR</ATCommand>
+		<description>Read firmware version of the RF module</description>
+		<location>
+			<x>10</x>
+			<y>170</y>
+		</location>
+	</command>
+
+	<command>
+		<name>Read Baudrate</name>
+		<ATCommand>BD</ATCommand>
+		<description>Reports the baudrate for the RF module</description>
+		<location>
+			<x>10</x>
+			<y>200</y>
+		</location>
+	</command>
+	
+	<command>
+		<name>Set Baudrate</name>
+		<ATCommand>BD</ATCommand>
+		<description>Use 0xFFFF to broadcast messages to all PAN's'</description>
+		<location>
+			<x>10</x>
+			<y>230</y>
+		</location>	
+		<parameter>
+				<name>0</name>
+				<description>1200</description>
+		</parameter>
+		<parameter>
+				<name>1</name>
+				<description>2400</description>
+		</parameter>
+		<parameter>
+				<name>2</name>
+				<description>4800</description>
+		</parameter>
+		<parameter>
+				<name>3</name>
+				<description>9600</description>
+		</parameter>
+		<parameter>
+				<name>4</name>
+				<description>19200</description>
+		</parameter>
+		<parameter>
+				<name>5</name>
+				<description>38400</description>
+		</parameter>
+		<parameter>
+				<name>6</name>
+				<description>57600</description>
+		</parameter>
+		<parameter>
+				<name>7</name>
+				<description>115200</description>
+		</parameter>					
+	</command>
+
+	<command>
+		<name>PAN ID</name>
+		<ATCommand>ID</ATCommand>
+		<description>Reads and Sets Pan ID on RF module</description>
+		<location>
+			<x>10</x>
+			<y>260</y>
+		</location>		
+	</command>
+	
+	<command>
+		<name>LADYADA Transmit</name>
+		<ATCommand>D03,D13,D23,D34,ICFF,IT0,WR</ATCommand>
+		<description>Setup xbee to mimic ladayada transmit tutorial</description>
+		<location>
+			<x>10</x>
+			<y>290</y>
+		</location>		
+	</command>
+
+	<command>
+		<name>LADYADA Recieve</name>
+		<ATCommand>D04,D14,D24,IAFF,IU0,WR,CN</ATCommand>
+		<description>Setup Xbee to mimic ladyada receive tutorial</description>
+		<location>
+			<x>10</x>
+			<y>320</y>
+		</location>		
+	</command>
+</special>
+
+
+<pin>	
+	<command>
+		<name>D0 configuration</name>
+		<ATCommand>D0</ATCommand>
+		<description>Select/Read settings for the following lines: AD0/DIO0 (pin20)</description>
+		<pin>20</pin>
+		<location>
+			<x>260</x>
+			<y>50</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>N/a</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>ADC</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>					
+	</command>
+	
+	<command>
+		<name>D1 configuration</name>
+		<ATCommand>D1</ATCommand>
+		<description>Select/Read settings for the following lines: AD1/DIO1 (pin19)</description>
+		<pin>19</pin>
+		<location>
+			<x>260</x>
+			<y>80</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>N/a</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>ADC</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>					
+	</command>
+	
+	<command>
+		<name>D2 configuration</name>
+		<ATCommand>D2</ATCommand>
+		<description>Select/Read settings for the following lines: AD2/DIO2 (pin18)</description>
+		<pin>18</pin>
+		<location>
+			<x>260</x>
+			<y>110</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>N/a</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>ADC</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>					
+	</command>
+	
+	<command>
+		<name>D3 configuration</name>
+		<ATCommand>D3</ATCommand>
+		<description>Select/Read settings for the following lines: AD3/DIO3 (pin17)</description>
+		<pin>17</pin>
+		<location>
+			<x>260</x>
+			<y>140</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>N/a</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>ADC</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>					
+	</command>
+	
+	<command>
+		<name>D4 configuration</name>
+		<ATCommand>D4</ATCommand>
+		<description>Select/Read settings for the following lines: AD4/DIO4 (pin11)</description>
+		<pin>11</pin>
+		<location>
+			<x>260</x>
+			<y>170</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>N/a</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>ADC</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>					
+	</command>
+	
+	<command>
+		<name>D5 configuration</name>
+		<ATCommand>D5</ATCommand>
+		<description>Configure settings for the DIO5 line (pin 15) of the RF module.  Options include Associated LED indicator (blinks when associated) and I/O line settings.</description>
+		<pin>15</pin>
+		<location>
+			<x>260</x>
+			<y>200</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>Associated indicator</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>ADC</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>					
+	</command>
+	
+	<command>
+		<name>D6 configuration</name>
+		<ATCommand>D6</ATCommand>
+		<description>Select/Read settings for the DI06 line (pin 16) of the RF module.  Options include RTS flow control and I/O line settings.</description>
+		<pin>16</pin>
+		<location>
+			<x>260</x>
+			<y>230</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>RTS flow control</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>(N/a)</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>					
+	</command>
+	
+	<command>
+		<name>D7 configuration</name>
+		<ATCommand>D7</ATCommand>
+		<description>Select/ Read settings for the DIO7 line (pin 12) of the RF module. Options include CTS flow control and I/O line settings.</description>
+		<pin>12</pin>
+		<location>
+			<x>260</x>
+			<y>260</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>CTS flow control</description>
+		</parameter>		
+		<parameter>
+			<name>2</name>
+			<description>(N/a)</description>
+		</parameter>	
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>
+		<parameter>
+			<name>4</name>
+			<description>DO LOW</description>
+		</parameter>
+		<parameter>
+			<name>5</name>
+			<description>DO HIGH</description>
+		</parameter>
+		<parameter>
+			<name>6</name>
+			<description>RS485 Tx Enable Low</description>
+		</parameter>
+		<parameter>
+			<name>7</name>
+			<description>RS485 Tx Enable High</description>
+		</parameter>						
+	</command>	
+
+	<command>
+		<name>D8 configuration</name>
+		<ATCommand>D8</ATCommand>
+		<description>Select/Read settings for the DI08 line (pin 9) of the RF module.</description>
+		<pin>9</pin>
+		<location>
+			<x>260</x>
+			<y>290</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>		
+		<parameter>
+			<name>3</name>
+			<description>DI</description>
+		</parameter>					
+	</command>	
+	<command>
+		<name>PWM0 configuration</name>
+		<ATCommand>P0</ATCommand>
+		<description>Select/Read settings for PWM0 pin</description>
+		<pin>6</pin>
+		<location>
+			<x>260</x>
+			<y>320</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>RSSI</description>
+		</parameter>		
+		<parameter>
+			<name>3</name>
+			<description>PWM Output</description>
+		</parameter>			
+	</command>	
+	
+	<command>
+		<name>PWM1 configuration</name>
+		<ATCommand>P1</ATCommand>
+		<description>Select/Read settings for PWM0 pin</description>
+		<pin>6</pin>
+		<location>
+			<x>260</x>
+			<y>350</y>
+		</location>
+		<parameter>
+			<name>0</name>
+			<description>Disabled</description>
+		</parameter>
+		<parameter>
+			<name>1</name>
+			<description>RSSI</description>
+		</parameter>		
+		<parameter>
+			<name>3</name>
+			<description>PWM Output</description>
+		</parameter>			
+	</command>	
+	
+</pin>
